@@ -3,7 +3,6 @@ package com.khubla.mtlib.db;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,13 +10,17 @@ import java.util.Set;
  */
 // https://www.javadoc.io/doc/redis.clients/jedis/1.4.0/redis/clients/jedis/Jedis.html
 public class Database {
-private final   DatabaseConfig databaseConfig;
+   private final DatabaseConfig databaseConfig;
    private final JedisPool jedisPool;
 
    public Database(DatabaseConfig databaseConfig) {
       super();
       this.databaseConfig = databaseConfig;
       this.jedisPool = new JedisPool(databaseConfig.getHostname(), databaseConfig.getPort());
+   }
+
+   public String get(long key) {
+      return get(Long.toString(key));
    }
 
    public String get(String key) {
@@ -29,7 +32,7 @@ private final   DatabaseConfig databaseConfig;
       }
    }
 
-  public long size() {
+   public long size() {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(databaseConfig.getPassword());
@@ -38,7 +41,7 @@ private final   DatabaseConfig databaseConfig;
       }
    }
 
-  public void set(String key, String value) {
+   public void set(String key, String value) {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(databaseConfig.getPassword());
@@ -47,12 +50,12 @@ private final   DatabaseConfig databaseConfig;
       }
    }
 
-   public Set<String> keys (){
+   public Set<String> keys() {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(databaseConfig.getPassword());
          // return
-       return  jedis.hkeys(databaseConfig.getHash());
+         return jedis.hkeys(databaseConfig.getHash());
       }
    }
 }

@@ -24,12 +24,12 @@ public class Coord {
    }
 
    // https://github.com/minetest/minetest/blob/master/src/database/database.cpp
-   public long toLong() {
+   public long toRedisLong() {
       return z * 0x1000000 + y * 0x1000 + x;
    }
 
    // https://github.com/minetest/minetest/blob/master/src/database/database.cpp
-   public static Coord parse(String c) {
+   public static Coord parseRedisLong(String c) {
       long ll = Long.parseLong(c);
       long x = ll % 4096;
       ll = (ll - x) / 4096;

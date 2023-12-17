@@ -22,16 +22,21 @@ public class Map {
    }
 
    public Block get(Coord coord) {
-      return null;
+      String blockData = database.get(coord.toRedisLong());
+      Block block = new Block();
+      return block;
    }
 
    public void set(Coord coord, Block block) {
    }
 
+   /**
+    * ugh. page this!
+    */
    public void iterateCoords(CoordCallback coordCallback) {
       Set<String> coords = database.keys();
       for (String s : coords) {
-         Coord c = Coord.parse(s);
+         Coord c = Coord.parseRedisLong(s);
          coordCallback.coord(c);
       }
    }
