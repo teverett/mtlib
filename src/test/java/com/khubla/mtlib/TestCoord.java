@@ -3,16 +3,17 @@ package com.khubla.mtlib;
 import com.khubla.mtlib.db.Database;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestMap {
+public class TestCoord {
    @Test
-   public void testSize() {
+   public void testCoord() {
       try {
          Database database = new Database(new TestDatabaseConfig());
-         long size = database.size();
-         assertTrue(size != 0);
-         System.out.println("Map size:" + size);
+
+         
       } catch (final Exception e) {
          e.printStackTrace();
       }

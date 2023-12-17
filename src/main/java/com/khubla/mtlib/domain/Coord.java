@@ -22,4 +22,19 @@ public class Coord {
    public long getX() {
       return x;
    }
+
+   // https://github.com/minetest/minetest/blob/master/src/database/database.cpp
+   public long toLong() {
+      return z * 0x1000000 + y * 0x1000 + x;
+   }
+
+   // https://github.com/minetest/minetest/blob/master/src/database/database.cpp
+   public static Coord parse(long ll) {
+      long x = ll % 4096;
+      ll = (ll - x) / 4096;
+      long y = ll % 4096;
+      ll = (ll - y) / 4096;
+      long z = ll % 4096;
+      return new Coord(x, y, z);
+   }
 }

@@ -6,55 +6,53 @@ import redis.clients.jedis.JedisPool;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The Redis database, in Redis format
+ */
+// https://www.javadoc.io/doc/redis.clients/jedis/1.4.0/redis/clients/jedis/Jedis.html
 public class Database {
-   private final String hostname;
-   private final int port;
-   private final String hash;
-   private final String password;
+private final   DatabaseConfig databaseConfig;
    private final JedisPool jedisPool;
 
-   public Database(String hostname, int port, String hash, String password) {
+   public Database(DatabaseConfig databaseConfig) {
       super();
-      this.hostname = hostname;
-      this.port = port;
-      this.hash = hash;
-      this.password = password;
-      this.jedisPool = new JedisPool(hostname, port);
+      this.databaseConfig = databaseConfig;
+      this.jedisPool = new JedisPool(databaseConfig.getHostname(), databaseConfig.getPort());
    }
 
    public String get(String key) {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
-         jedis.auth(password);
+         jedis.auth(databaseConfig.getPassword());
          // return
-         return jedis.hget(hash, key);
+         return jedis.hget(databaseConfig.getHash(), key);
       }
    }
 
   public long size() {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
-         jedis.auth(password);
+         jedis.auth(databaseConfig.getPassword());
          // return
-         return jedis.hlen(hash);
+         return jedis.hlen(databaseConfig.getHash());
       }
    }
 
   public void set(String key, String value) {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
-         jedis.auth(password);
+         jedis.auth(databaseConfig.getPassword());
          // return
-         jedis.hset(hash, key, value);
+         jedis.hset(databaseConfig.getHash(), key, value);
       }
    }
 
    public Set<String> keys (){
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
-         jedis.auth(password);
+         jedis.auth(databaseConfig.getPassword());
          // return
-       return  jedis.hkeys(hash);
+       return  jedis.hkeys(databaseConfig.getHash());
       }
    }
 }
