@@ -50,6 +50,15 @@ public class Database {
       }
    }
 
+   public void remove(String key) {
+      try (Jedis jedis = jedisPool.getResource()) {
+         // auth
+         jedis.auth(databaseConfig.getPassword());
+         // return
+         jedis.hdel(databaseConfig.getHash(), key);
+      }
+   }
+
    public Set<String> allKeys() {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
