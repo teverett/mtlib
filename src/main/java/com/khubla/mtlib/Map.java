@@ -19,21 +19,30 @@ public class Map {
       this.jedisPool = new JedisPool(hostname, port);
    }
 
-   String get(String key){
+   String get(String key) {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(password);
          // return
-        return  jedis.hget(hash, key);
+         return jedis.hget(hash, key);
       }
    }
 
-  long size() {
-     try (Jedis jedis = jedisPool.getResource()) {
-        // auth
-        jedis.auth(password);
-        // return
-        return  jedis.hlen(hash);
-     }
-  }
+   long size() {
+      try (Jedis jedis = jedisPool.getResource()) {
+         // auth
+         jedis.auth(password);
+         // return
+         return jedis.hlen(hash);
+      }
+   }
+
+   void set(String key, String value) {
+      try (Jedis jedis = jedisPool.getResource()) {
+         // auth
+         jedis.auth(password);
+         // return
+         jedis.hset(hash, key, value);
+      }
+   }
 }
