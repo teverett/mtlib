@@ -7,3 +7,4 @@ public class TestingDatabaseConfig extends DatabaseConfig {
       super("minetest", 6379, "mt", "abc123!!");
    }
 }
+

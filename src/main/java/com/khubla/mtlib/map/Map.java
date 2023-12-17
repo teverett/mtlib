@@ -33,7 +33,7 @@ public class Map implements MapEntryIterator {
    }
 
    public void iterateBlocks() {
-      if (null!=this.blockIterator) {
+      if (null != this.blockIterator) {
          database.iterateMapEntries(this);
       }
    }
