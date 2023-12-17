@@ -1,10 +1,8 @@
 package com.khubla.mtlib.domain;
 
-import com.khubla.mtlib.compress.ZLibCompression;
 import com.khubla.mtlib.util.HexDump;
 import com.khubla.mtlib.util.MTLibException;
 
-import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
 public class Block implements StringSerializable {
@@ -25,13 +23,13 @@ public class Block implements StringSerializable {
       try {
          // all sorts of flapping around to get a DataInputStream
          byte[] compresseddata = s.getBytes();
-         HexDump.dump(compresseddata);
-         byte[] uncompressedData = ZLibCompression.decompress(compresseddata);
+         HexDump.dump(compresseddata, 16);
+         //     byte[] uncompressedData = ZLibCompression.decompress(compresseddata);
          // byte[] uncompressedData = compresseddata;
-         ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
-         DataInputStream dis = new DataInputStream(bais);
+         //   ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
+         //   DataInputStream dis = new DataInputStream(bais);
          // read the data
-         readFromDataInputStream(dis);
+         //   readFromDataInputStream(dis);
       } catch (Exception e) {
          throw new MTLibException("Exception in readFromString", e);
       }
