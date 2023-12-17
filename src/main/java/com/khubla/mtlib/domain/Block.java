@@ -1,6 +1,6 @@
 package com.khubla.mtlib.domain;
 
-import com.khubla.mtlib.compress.ZStdCompression;
+import com.khubla.mtlib.compress.ZLibCompression;
 import com.khubla.mtlib.util.MTLibException;
 
 import java.io.ByteArrayInputStream;
@@ -24,7 +24,7 @@ public class Block implements StringSerializable {
       try {
          // all sorts of flapping around to get a DataInputStream
          byte[] compresseddata = s.getBytes();
-         byte[] uncompressedData = ZStdCompression.decompress(compresseddata);
+         byte[] uncompressedData = ZLibCompression.decompress(compresseddata);
          // byte[] uncompressedData = compresseddata;
          ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
          DataInputStream dis = new DataInputStream(bais);

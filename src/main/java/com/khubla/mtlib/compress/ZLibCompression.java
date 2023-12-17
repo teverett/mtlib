@@ -14,15 +14,16 @@ public class ZLibCompression {
       InflaterInputStream inflateris = new InflaterInputStream(bais);
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       IOUtils.copy(inflateris, baos);
+      baos.flush();
       return baos.toByteArray();
    }
 
    public static byte[] compress(byte[] data) throws IOException {
+      ByteArrayInputStream bais = new ByteArrayInputStream(data);
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       DeflaterOutputStream deflateros = new DeflaterOutputStream(baos);
-      for (byte b : data) {
-         deflateros.write(b);
-      }
+      IOUtils.copy(bais, deflateros);
+      deflateros.flush();
       deflateros.close();
       return baos.toByteArray();
    }
