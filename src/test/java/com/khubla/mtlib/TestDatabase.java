@@ -3,6 +3,8 @@ package com.khubla.mtlib;
 import com.khubla.mtlib.db.Database;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -31,6 +33,19 @@ public class TestDatabase {
          long size = database.size();
          assertTrue(size != 0);
          System.out.println("Database size:"+size);
+      } catch (final Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+   @Test
+   public void testKeys() {
+      try {
+         Database database = new Database(HOSTNAME, PORT, HASH, PASSWORD);
+         long size = database.size();
+         assertTrue(size != 0);
+         Set<String> keys = database.keys();
+         assertTrue(size == keys.size());
       } catch (final Exception e) {
          e.printStackTrace();
       }

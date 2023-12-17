@@ -3,6 +3,9 @@ package com.khubla.mtlib.db;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.List;
+import java.util.Set;
+
 public class Database {
    private final String hostname;
    private final int port;
@@ -43,6 +46,15 @@ public class Database {
          jedis.auth(password);
          // return
          jedis.hset(hash, key, value);
+      }
+   }
+
+   public Set<String> keys (){
+      try (Jedis jedis = jedisPool.getResource()) {
+         // auth
+         jedis.auth(password);
+         // return
+       return  jedis.hkeys(hash);
       }
    }
 }
