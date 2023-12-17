@@ -37,4 +37,8 @@ public class Coord {
       long z = ll % 4096;
       return new Coord(x, y, z);
    }
+
+   public String toString() {
+      return "x: "+x+" y:"+y+" z:"+z;
+   }
 }

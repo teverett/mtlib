@@ -11,7 +11,7 @@ public class TestDatabase {
    @Test
    public void testGet() {
       try {
-         Database database = new Database(new TestDatabaseConfig());
+         Database database = new Database(new TestingDatabaseConfig());
          String block = database.get("16777205");
          assertNotNull(block);
          System.out.println(block);
@@ -23,7 +23,7 @@ public class TestDatabase {
    @Test
    public void testSize() {
       try {
-         Database database = new Database(new TestDatabaseConfig());
+         Database database = new Database(new TestingDatabaseConfig());
          long size = database.size();
          assertTrue(size != 0);
          System.out.println("Database size:" + size);
@@ -35,7 +35,7 @@ public class TestDatabase {
    @Test
    public void testKeys() {
       try {
-         Database database = new Database(new TestDatabaseConfig());
+         Database database = new Database(new TestingDatabaseConfig());
          long size = database.size();
          assertTrue(size != 0);
          Set<String> keys = database.keys();

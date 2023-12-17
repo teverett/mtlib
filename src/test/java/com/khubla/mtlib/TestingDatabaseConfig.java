@@ -2,8 +2,8 @@ package com.khubla.mtlib;
 
 import com.khubla.mtlib.db.DatabaseConfig;
 
-public class TestDatabaseConfig extends DatabaseConfig {
-   public TestDatabaseConfig() {
+public class TestingDatabaseConfig extends DatabaseConfig {
+   public TestingDatabaseConfig() {
       super("minetest", 6379, "mt", "abc123!!");
    }
 }
