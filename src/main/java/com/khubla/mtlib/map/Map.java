@@ -25,9 +25,13 @@ public class Map implements MapEntryIterator {
 
    public Block get(Coord coord) throws MTLibException {
       String blockData = database.get(coord.writeToString());
-      Block block = new Block();
-      block.readFromString(blockData);
-      return block;
+      if (null != blockData) {
+         Block block = new Block();
+         block.readFromString(blockData);
+         return block;
+      } else {
+         throw new MTLibException("No block at: " + coord);
+      }
    }
 
    public void set(Coord coord, Block block) {

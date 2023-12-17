@@ -6,11 +6,15 @@ public class HexDump {
    public static void dump(byte[] bytes) {
       int w = 0;
       System.out.printf("0x%02X: ", 0);
+      StringBuilder s = new StringBuilder();
       for (int i = 0; i < bytes.length; i++) {
          System.out.printf("0x%02X ", bytes[i]);
+         s.append((char) bytes[i]);
          w = w + 1;
          if (w == PAGE_WIDTH) {
             w = 0;
+            System.out.println(" " + s);
+            s = new StringBuilder();
             System.out.println();
             System.out.printf("0x%02X: ", i);
          }
