@@ -4,6 +4,7 @@ import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
 import com.khubla.mtlib.map.BlockIterator;
 import com.khubla.mtlib.map.Map;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,7 +13,7 @@ public class TestMapDump implements BlockIterator {
    Map map = new Map(new TestingDatabaseConfig(), this);
 
    @Test
-   //   @Disabled
+   @Disabled
    public void testMapDump() {
       try {
          map.iterateBlocks();

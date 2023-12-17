@@ -14,7 +14,7 @@ public class Block implements StringSerializable {
 
    @Override
    public void readFromString(String s) {
-      System.out.println(s);
+      byte[] data = s.getBytes();
    }
 
    @Override
