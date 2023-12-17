@@ -1,29 +1,28 @@
 package com.khubla.mtlib.map;
 
-import org.apache.commons.compress.utils.IOUtils;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.zip.DeflaterInputStream;
+import java.util.Arrays;
 import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
 
 public class ZCompression {
    public static byte[] decompress(byte[] data) throws IOException {
-      ByteArrayInputStream bais = new ByteArrayInputStream(data);
-      DeflaterInputStream deflaterIn = new DeflaterInputStream(bais);
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      IOUtils.copy(deflaterIn, baos);
-      baos.flush();
-      return baos.toByteArray();
+      byte[] readBuffer = new byte[5000];
+      ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(data);
+      InflaterInputStream inputStream = new InflaterInputStream(arrayInputStream);
+      int read = inputStream.read(readBuffer);
+      return Arrays.copyOf(readBuffer, read);
    }
 
    public static byte[] compress(byte[] data) throws IOException {
-      ByteArrayInputStream bais = new ByteArrayInputStream(data);
-      DeflaterOutputStream deflaterOut = new DeflaterOutputStream(baos);
-      IOUtils.copy(bais, deflaterOut);
-      deflaterOut.flush();
-      deflaterOut.close();
-      return baos.toByteArray();
+      ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
+      DeflaterOutputStream outputStream = new DeflaterOutputStream(arrayOutputStream);
+      for (byte b : data) {
+         outputStream.write(b);
+      }
+      outputStream.close();
+      return arrayOutputStream.toByteArray();
    }
 }
