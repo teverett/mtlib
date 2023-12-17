@@ -1,28 +1,29 @@
 package com.khubla.mtlib.map;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
 public class ZCompression {
    public static byte[] decompress(byte[] data) throws IOException {
-      byte[] readBuffer = new byte[5000];
-      ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(data);
-      InflaterInputStream inputStream = new InflaterInputStream(arrayInputStream);
-      int read = inputStream.read(readBuffer);
-      return Arrays.copyOf(readBuffer, read);
+      ByteArrayInputStream bais = new ByteArrayInputStream(data);
+      InflaterInputStream inflateris = new InflaterInputStream(bais);
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      IOUtils.copy(inflateris, baos);
+      return baos.toByteArray();
    }
 
    public static byte[] compress(byte[] data) throws IOException {
-      ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-      DeflaterOutputStream outputStream = new DeflaterOutputStream(arrayOutputStream);
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      DeflaterOutputStream deflateros = new DeflaterOutputStream(baos);
       for (byte b : data) {
-         outputStream.write(b);
+         deflateros.write(b);
       }
-      outputStream.close();
-      return arrayOutputStream.toByteArray();
+      deflateros.close();
+      return baos.toByteArray();
    }
 }
