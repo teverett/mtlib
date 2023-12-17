@@ -73,7 +73,9 @@ public class Database {
       }
    }
 
-
+   /**
+    * paged iterate of map entries
+    */
    public void iterateMapEntries(MapEntryIterator mapEntryIterator) {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
