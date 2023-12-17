@@ -31,7 +31,8 @@ public class Map {
    public void iterateCoords(CoordCallback coordCallback) {
       Set<String> coords = database.keys();
       for (String s : coords) {
-         coordCallback.coord(null);
+         Coord c = Coord.parse(s);
+         coordCallback.coord(c);
       }
    }
 }

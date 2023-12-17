@@ -29,7 +29,8 @@ public class Coord {
    }
 
    // https://github.com/minetest/minetest/blob/master/src/database/database.cpp
-   public static Coord parse(long ll) {
+   public static Coord parse(String c) {
+      long ll = Long.parseLong(c);
       long x = ll % 4096;
       ll = (ll - x) / 4096;
       long y = ll % 4096;
