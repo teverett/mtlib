@@ -38,7 +38,7 @@ public class TestDatabase {
          Database database = new Database(new TestingDatabaseConfig());
          long size = database.size();
          assertTrue(size != 0);
-         Set<String> keys = database.keys();
+         Set<String> keys = database.allKeys();
          assertEquals(size, keys.size());
       } catch (final Exception e) {
          e.printStackTrace();

@@ -50,7 +50,7 @@ public class Database {
       }
    }
 
-   public Set<String> keys() {
+   public Set<String> allKeys() {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(databaseConfig.getPassword());

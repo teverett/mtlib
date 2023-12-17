@@ -34,7 +34,7 @@ public class Map {
     * ugh. page this!
     */
    public void iterateCoords(CoordCallback coordCallback) {
-      Set<String> coords = database.keys();
+      Set<String> coords = database.allKeys();
       for (String s : coords) {
          Coord c = Coord.parseRedisLong(s);
          coordCallback.coord(c);
