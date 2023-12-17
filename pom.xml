@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.khubla.mtlib</groupId>
 	<artifactId>mtlib</artifactId>
@@ -11,6 +13,7 @@
 		<required-maven-version>3.3.1</required-maven-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>5.10.0</junit.version>
+		<jedis.version>5.1.0</jedis.version>
 	</properties>
 	<developers>
 		<developer>
@@ -42,6 +45,11 @@
 			<artifactId>junit-jupiter-engine</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -119,7 +127,8 @@
 							</execution>
 						</executions>
 						<configuration>
-							<!-- <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable> -->
+							<!--
+							<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable> -->
 							<source>8</source>
 							<doclint>none</doclint>
 						</configuration>
