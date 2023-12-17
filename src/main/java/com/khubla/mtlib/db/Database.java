@@ -2,14 +2,19 @@ package com.khubla.mtlib.db;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.params.ScanParams;
+import redis.clients.jedis.resps.ScanResult;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * The Redis database, in Redis format
  */
-// https://www.javadoc.io/doc/redis.clients/jedis/1.4.0/redis/clients/jedis/Jedis.html
+// https://javadoc.io/doc/redis.clients/jedis/latest/index.html
 public class Database {
+   private static final int PAGESIZE = 100;
    private final DatabaseConfig databaseConfig;
    private final JedisPool jedisPool;
 
@@ -65,6 +70,29 @@ public class Database {
          jedis.auth(databaseConfig.getPassword());
          // return
          return jedis.hkeys(databaseConfig.getHash());
+      }
+   }
+
+
+   public void iterateMapEntries(MapEntryIterator mapEntryIterator) {
+      try (Jedis jedis = jedisPool.getResource()) {
+         // auth
+         jedis.auth(databaseConfig.getPassword());
+         // return
+         ScanParams scanParams = new ScanParams().count(PAGESIZE);
+         String cur = ScanParams.SCAN_POINTER_START;
+         boolean done = false;
+         while (!done) {
+            ScanResult<Map.Entry<String, String>> scanResult = jedis.hscan(databaseConfig.getHash(), cur, scanParams);
+            List<Map.Entry<String, String>> result = scanResult.getResult();
+            for (Map.Entry<String, String> e : result) {
+               mapEntryIterator.mapEntry(e.getKey(), e.getValue());
+            }
+            cur = scanResult.getCursor();
+            if (cur.equals("0")) {
+               done = true;
+            }
+         }
       }
    }
 }

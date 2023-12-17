@@ -44,4 +44,16 @@ public class TestDatabase {
          e.printStackTrace();
       }
    }
+
+   @Test
+   public void testKeyIterator() {
+      try {
+         Database database = new Database(new TestingDatabaseConfig());
+         database.iterateMapEntries(new TestingMapEntryIterator());
+      } catch (final Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+
 }
