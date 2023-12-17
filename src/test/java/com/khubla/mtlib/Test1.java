@@ -14,8 +14,8 @@ public class Test1 {
    @Test
    public void testGet() {
       try {
-         Database database = new Database(HOSTNAME, PORT, HASH, PASSWORD);
-         String block = database.get("16777205");
+         Map map = new Map(HOSTNAME, PORT, HASH, PASSWORD);
+         String block = map.get("16777205");
          assertNotNull(block);
          System.out.println(block);
       } catch (final Exception e) {
@@ -26,8 +26,8 @@ public class Test1 {
    @Test
    public void testSize() {
       try {
-         Database database = new Database("minetest", 6379, "mt", "abc123!!");
-         long size = database.size();
+         Map map = new Map("minetest", 6379, "mt", "abc123!!");
+         long size = map.size();
          assertTrue(size != 0);
          System.out.println(size);
       } catch (final Exception e) {
