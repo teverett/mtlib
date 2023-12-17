@@ -17,7 +17,7 @@ public class ZStdCompression {
          zstdDecompressor.decompress(bb, output);
          return output.array();
       } catch (Exception e) {
-         throw new MTLibException("Exception in compress", e);
+         throw new MTLibException("Exception in decompress", e);
       }
    }
 
@@ -25,7 +25,7 @@ public class ZStdCompression {
       try {
          ZstdCompressor zstdCompressor = new ZstdCompressor();
          ByteBuffer bb = ByteBuffer.wrap(data);
-         ByteBuffer output = ByteBuffer.allocate(data.length * 2);
+         ByteBuffer output = ByteBuffer.allocate(zstdCompressor.maxCompressedLength(data.length));
          zstdCompressor.compress(bb, output);
          return output.array();
       } catch (Exception e) {
