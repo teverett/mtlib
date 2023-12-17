@@ -9,7 +9,7 @@ public class TestMap {
    @Test
    public void testSize() {
       try {
-         Map map = new Map(new TestingDatabaseConfig());
+         Map map = new Map(new TestingDatabaseConfig(), null);
          long size = map.size();
          assertTrue(size != 0);
          System.out.println("Map size:" + size);

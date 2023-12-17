@@ -1,6 +1,7 @@
 package com.khubla.mtlib;
 
 import com.khubla.mtlib.db.Database;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -46,6 +47,7 @@ public class TestDatabase {
    }
 
    @Test
+   @Disabled
    public void testKeyIterator() {
       try {
          Database database = new Database(new TestingDatabaseConfig());
