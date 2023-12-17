@@ -1,12 +1,13 @@
 package com.khubla.mtlib.domain;
 
-import com.khubla.mtlib.map.ZCompression;
+import com.khubla.mtlib.map.ZStdCompression;
+import com.khubla.mtlib.util.MTLibException;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.io.IOException;
 
 public class Block implements StringSerializable {
+   private final NameIdMapping nameIdMapping = new NameIdMapping();
    private byte flags;
    private short m_lighting_complete;
    private byte content_width;
@@ -17,18 +18,21 @@ public class Block implements StringSerializable {
    private long timestamp;
    private byte[] nimap;
    private byte[] node_timers;
-   private final NameIdMapping nameIdMapping = new NameIdMapping();
 
    @Override
-   public void readFromString(String s) throws IOException {
-      // all sorts of flapping around to get a DataInputStream
-      byte[] compresseddata = s.getBytes();
-      byte[] uncompressedData = ZCompression.decompress(compresseddata);
-      ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
-      DataInputStream dos = new DataInputStream(bais);
-      // read the data
-      this.flags = dos.readByte();
-      m_lighting_complete = dos.readShort();
+   public void readFromString(String s) throws MTLibException {
+      try {
+         // all sorts of flapping around to get a DataInputStream
+         byte[] compresseddata = s.getBytes();
+         byte[] uncompressedData = ZStdCompression.decompress(compresseddata);
+         ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
+         DataInputStream dos = new DataInputStream(bais);
+         // read the data
+         this.flags = dos.readByte();
+         m_lighting_complete = dos.readShort();
+      } catch (Exception e) {
+         throw new MTLibException("Exception in readFromString", e);
+      }
    }
 
    public boolean isGenerated() {

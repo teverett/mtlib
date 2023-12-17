@@ -1,11 +1,11 @@
 package com.khubla.mtlib.db;
 
+import com.khubla.mtlib.util.MTLibException;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.params.ScanParams;
 import redis.clients.jedis.resps.ScanResult;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -77,7 +77,7 @@ public class Database {
    /**
     * paged iterate of map entries
     */
-   public void iterateMapEntries(MapEntryIterator mapEntryIterator) throws IOException {
+   public void iterateMapEntries(MapEntryIterator mapEntryIterator) throws MTLibException {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(databaseConfig.getPassword());

@@ -5,8 +5,7 @@ import com.khubla.mtlib.db.DatabaseConfig;
 import com.khubla.mtlib.db.MapEntryIterator;
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
-
-import java.io.IOException;
+import com.khubla.mtlib.util.MTLibException;
 
 /**
  * Minetest database
@@ -24,7 +23,7 @@ public class Map implements MapEntryIterator {
       return database.size();
    }
 
-   public Block get(Coord coord) throws IOException {
+   public Block get(Coord coord) throws MTLibException {
       String blockData = database.get(coord.writeToString());
       Block block = new Block();
       block.readFromString(blockData);
@@ -35,14 +34,14 @@ public class Map implements MapEntryIterator {
       // TODO
    }
 
-   public void iterateBlocks() throws IOException {
+   public void iterateBlocks() throws MTLibException {
       if (null != this.blockIterator) {
          database.iterateMapEntries(this);
       }
    }
 
    @Override
-   public void mapEntry(String key, String value) throws IOException {
+   public void mapEntry(String key, String value) throws MTLibException {
       Coord coord = new Coord();
       coord.readFromString(key);
       Block block = new Block();

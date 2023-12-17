@@ -1,9 +1,9 @@
 package com.khubla.mtlib.domain;
 
-import java.io.IOException;
+import com.khubla.mtlib.util.MTLibException;
 
 public interface StringSerializable {
-   void readFromString(String s) throws IOException;
+   void readFromString(String s) throws MTLibException;
 
-   String writeToString();
+   String writeToString() throws MTLibException;
 }

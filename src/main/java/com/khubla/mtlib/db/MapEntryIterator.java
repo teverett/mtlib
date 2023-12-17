@@ -1,8 +1,8 @@
 package com.khubla.mtlib.db;
 
-import java.io.IOException;
+import com.khubla.mtlib.util.MTLibException;
 
 public interface MapEntryIterator {
-   void mapEntry(String key, String value) throws IOException;
+   void mapEntry(String key, String value) throws MTLibException;
 }
 

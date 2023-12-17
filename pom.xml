@@ -15,6 +15,7 @@
         <junit.version>5.10.0</junit.version>
         <jedis.version>5.1.0</jedis.version>
         <commons.io.version>2.15.1</commons.io.version>
+        <aircompressor.version>0.25</aircompressor.version>
     </properties>
     <developers>
         <developer>
@@ -56,6 +57,11 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons.io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.airlift</groupId>
+            <artifactId>aircompressor</artifactId>
+            <version>${aircompressor.version}</version>
         </dependency>
     </dependencies>
     <build>
