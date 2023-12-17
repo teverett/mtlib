@@ -1,11 +1,12 @@
 package com.khubla.mtlib;
 
+import com.khubla.mtlib.db.Database;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class Test1 {
+public class TestDatabase {
    private static final String HOSTNAME = "minetest";
    private static final int PORT = 6379;
    private static final String HASH = "mt";
@@ -14,8 +15,8 @@ public class Test1 {
    @Test
    public void testGet() {
       try {
-         Map map = new Map(HOSTNAME, PORT, HASH, PASSWORD);
-         String block = map.get("16777205");
+         Database database = new Database(HOSTNAME, PORT, HASH, PASSWORD);
+         String block = database.get("16777205");
          assertNotNull(block);
          System.out.println(block);
       } catch (final Exception e) {
@@ -26,10 +27,10 @@ public class Test1 {
    @Test
    public void testSize() {
       try {
-         Map map = new Map("minetest", 6379, "mt", "abc123!!");
-         long size = map.size();
+         Database database = new Database(HOSTNAME, PORT, HASH, PASSWORD);
+         long size = database.size();
          assertTrue(size != 0);
-         System.out.println(size);
+         System.out.println("Database size:"+size);
       } catch (final Exception e) {
          e.printStackTrace();
       }

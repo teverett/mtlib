@@ -1,16 +1,16 @@
-package com.khubla.mtlib;
+package com.khubla.mtlib.db;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-public class Map {
+public class Database {
    private final String hostname;
    private final int port;
    private final String hash;
    private final String password;
    private final JedisPool jedisPool;
 
-   public Map(String hostname, int port, String hash, String password) {
+   public Database(String hostname, int port, String hash, String password) {
       super();
       this.hostname = hostname;
       this.port = port;
@@ -19,7 +19,7 @@ public class Map {
       this.jedisPool = new JedisPool(hostname, port);
    }
 
-   String get(String key) {
+   public String get(String key) {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(password);
@@ -28,7 +28,7 @@ public class Map {
       }
    }
 
-   long size() {
+  public long size() {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(password);
@@ -37,7 +37,7 @@ public class Map {
       }
    }
 
-   void set(String key, String value) {
+  public void set(String key, String value) {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(password);
