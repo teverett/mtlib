@@ -23,7 +23,7 @@ public class Map implements MapEntryIterator {
    }
 
    public Block get(Coord coord) {
-      String blockData = database.get(coord.toRedisLong());
+      String blockData = database.get(coord.writeToString());
       Block block = new Block();
       return block;
    }
@@ -40,7 +40,8 @@ public class Map implements MapEntryIterator {
 
    @Override
    public void mapEntry(String key, String value) {
-      Coord coord = Coord.parseRedisLong(key);
+      Coord coord = new Coord();
+      coord.readFromString(key);
       Block block = new Block();
       this.blockIterator.block(coord, block);
    }
