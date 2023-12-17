@@ -14,8 +14,10 @@ public class TestZStdCompression {
    @Test
    public void testZCompression() {
       try {
+         System.out.println(TEST_STRING.length());
          byte[] compressed = ZStdCompression.compress(TEST_STRING.getBytes(StandardCharsets.UTF_8));
          assertNotNull(compressed);
+         System.out.println(compressed.length);
          byte[] decompressed = ZStdCompression.decompress(compressed);
          String s = new String(decompressed, StandardCharsets.UTF_8);
          assertNotNull(decompressed);
