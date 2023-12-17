@@ -1,6 +1,6 @@
 package com.khubla.mtlib.domain;
 
-import com.khubla.mtlib.map.ZStdCompression;
+import com.khubla.mtlib.compress.ZStdCompression;
 import com.khubla.mtlib.util.MTLibException;
 
 import java.io.ByteArrayInputStream;
@@ -25,13 +25,30 @@ public class Block implements StringSerializable {
          // all sorts of flapping around to get a DataInputStream
          byte[] compresseddata = s.getBytes();
          byte[] uncompressedData = ZStdCompression.decompress(compresseddata);
+         // byte[] uncompressedData = compresseddata;
          ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
-         DataInputStream dos = new DataInputStream(bais);
+         DataInputStream dis = new DataInputStream(bais);
          // read the data
-         this.flags = dos.readByte();
-         m_lighting_complete = dos.readShort();
+         readFromDataInputStream(dis);
       } catch (Exception e) {
          throw new MTLibException("Exception in readFromString", e);
+      }
+   }
+
+   private void readFromDataInputStream(DataInputStream dis) throws MTLibException {
+      try {
+         this.flags = dis.readByte();
+         this.m_lighting_complete = dis.readShort();
+         this.content_width = dis.readByte();
+         if ((content_width != 0) && (content_width != 1)) {
+            throw new MTLibException("Invalid content_width: " + content_width);
+         }
+         this.params_width = dis.readByte();
+         if (params_width != 2) {
+            throw new MTLibException("Invalid params_width: " + params_width);
+         }
+      } catch (Exception e) {
+         throw new MTLibException("Exception in readFromDataInputStream", e);
       }
    }
 

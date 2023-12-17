@@ -1,4 +1,4 @@
-package com.khubla.mtlib.map;
+package com.khubla.mtlib.compress;
 
 import com.github.luben.zstd.ZstdInputStream;
 import com.github.luben.zstd.ZstdOutputStream;
