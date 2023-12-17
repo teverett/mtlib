@@ -25,6 +25,7 @@ public class Map implements MapEntryIterator {
    public Block get(Coord coord) {
       String blockData = database.get(coord.writeToString());
       Block block = new Block();
+      block.readFromString(blockData);
       return block;
    }
 
@@ -43,6 +44,7 @@ public class Map implements MapEntryIterator {
       Coord coord = new Coord();
       coord.readFromString(key);
       Block block = new Block();
+      block.readFromString(value);
       this.blockIterator.block(coord, block);
    }
 }
