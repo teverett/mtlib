@@ -40,7 +40,7 @@ public class NameIdMapping {
             writeStringSZ(dos, entry.getValue());
          }
       } catch (Exception e) {
-         throw new MTLibException("Exception in read", e);
+         throw new MTLibException("Exception in write", e);
       }
    }
 

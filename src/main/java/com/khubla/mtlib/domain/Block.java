@@ -60,6 +60,7 @@ public class Block implements StringSerializable {
          // https://github.com/minetest/minetest/blob/5d3e83017679317c27fe02b7087effd9d67f79cc/src/map.cpp#L1799
          this.flags = dis.readByte();
          this.m_lighting_complete = dis.readShort();
+         this.timestamp = dis.readLong();
          nameIdMapping.read(dis);
          this.content_width = dis.readByte();
          if ((content_width != 0) && (content_width != 1)) {
