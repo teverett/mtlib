@@ -33,6 +33,10 @@ public class Block implements StringSerializable {
          if (version == EXPECTED_SERIALIZATION_VERSION) {
             HexDump.dump(compresseddata, 128);
             compresseddata = ArrayUtils.remove(compresseddata, 0);
+            compresseddata = ArrayUtils.insert(0, compresseddata, (byte) 0xFD);
+            compresseddata = ArrayUtils.insert(0, compresseddata, (byte) 0x2F);
+            compresseddata = ArrayUtils.insert(0, compresseddata, (byte) 0xB5);
+            compresseddata = ArrayUtils.insert(0, compresseddata, (byte) 0x28);
             ByteBuffer in = ByteBuffer.wrap(compresseddata);
             byte[] outbytes = new byte[10000];
             ByteBuffer out = ByteBuffer.wrap(outbytes);
@@ -56,7 +60,7 @@ public class Block implements StringSerializable {
          // https://github.com/minetest/minetest/blob/5d3e83017679317c27fe02b7087effd9d67f79cc/src/map.cpp#L1799
          this.flags = dis.readByte();
          this.m_lighting_complete = dis.readShort();
-         // node map here
+         nameIdMapping.read(dis);
          this.content_width = dis.readByte();
          if ((content_width != 0) && (content_width != 1)) {
             throw new MTLibException("Invalid content_width: " + content_width);
