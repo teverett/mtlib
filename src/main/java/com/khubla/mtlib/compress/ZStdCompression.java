@@ -7,8 +7,11 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-// https://facebook.github.io/zstd/
 
+// https://facebook.github.io/zstd/
+// header bytes 0xFD 2F B5 28
+//              0xFD 2F B5 27
+// https://github.com/facebook/zstd/blob/dev/doc/zstd_compression_format.md#zstandard-frames
 public class ZStdCompression {
    public static byte[] decompress(byte[] data) throws MTLibException {
       try {

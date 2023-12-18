@@ -1,9 +1,14 @@
 package com.khubla.mtlib.domain;
 
+import com.github.luben.zstd.Zstd;
+import com.khubla.mtlib.compress.ZStdCompression;
+import com.khubla.mtlib.util.HexDump;
 import com.khubla.mtlib.util.MTLibException;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.nio.ByteBuffer;
 
 public class Block implements StringSerializable {
    private static final byte EXPECTED_SERIALIZATION_VERSION = 29;
@@ -24,13 +29,23 @@ public class Block implements StringSerializable {
       try {
          // all sorts of flapping around to get a DataInputStream
          byte[] compresseddata = s.getBytes();
-         //     HexDump.dump(compresseddata, 16);
-         //  byte[] uncompressedData = ZLibCompression.decompress(compresseddata);
-         byte[] uncompressedData = compresseddata;
-         ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
-         DataInputStream dis = new DataInputStream(bais);
-         // read the data
-         readFromDataInputStream(dis);
+         byte version = compresseddata[0];
+         if (version == EXPECTED_SERIALIZATION_VERSION) {
+            HexDump.dump(compresseddata, 128);
+            compresseddata = ArrayUtils.remove(compresseddata, 0);
+            ByteBuffer in = ByteBuffer.wrap(compresseddata);
+            byte[] outbytes = new byte[10000];
+            ByteBuffer out = ByteBuffer.wrap(outbytes);
+            Zstd.decompress(outbytes, compresseddata);
+            byte[] uncompressedData = ZStdCompression.decompress(compresseddata);
+            //       byte[] uncompressedData = compresseddata;
+            ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
+            DataInputStream dis = new DataInputStream(bais);
+            // read the data
+            readFromDataInputStream(dis);
+         } else {
+            throw new MTLibException("Unexpected serialization version: " + version);
+         }
       } catch (Exception e) {
          throw new MTLibException("Exception in readFromString", e);
       }
@@ -39,21 +54,16 @@ public class Block implements StringSerializable {
    private void readFromDataInputStream(DataInputStream dis) throws MTLibException {
       try {
          // https://github.com/minetest/minetest/blob/5d3e83017679317c27fe02b7087effd9d67f79cc/src/map.cpp#L1799
-         byte version = dis.readByte();
-         if (version == EXPECTED_SERIALIZATION_VERSION) {
-            this.flags = dis.readByte();
-            this.m_lighting_complete = dis.readShort();
-            // node map here
-            this.content_width = dis.readByte();
-            if ((content_width != 0) && (content_width != 1)) {
-               throw new MTLibException("Invalid content_width: " + content_width);
-            }
-            this.params_width = dis.readByte();
-            if (params_width != 2) {
-               throw new MTLibException("Invalid params_width: " + params_width);
-            }
-         } else {
-            throw new MTLibException("Unexpected serialization version: " + version);
+         this.flags = dis.readByte();
+         this.m_lighting_complete = dis.readShort();
+         // node map here
+         this.content_width = dis.readByte();
+         if ((content_width != 0) && (content_width != 1)) {
+            throw new MTLibException("Invalid content_width: " + content_width);
+         }
+         this.params_width = dis.readByte();
+         if (params_width != 2) {
+            throw new MTLibException("Invalid params_width: " + params_width);
          }
       } catch (Exception e) {
          throw new MTLibException("Exception in readFromDataInputStream", e);
