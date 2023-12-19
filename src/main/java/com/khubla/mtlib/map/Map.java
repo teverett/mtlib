@@ -24,10 +24,10 @@ public class Map implements MapEntryIterator {
    }
 
    public Block get(Coord coord) throws MTLibException {
-      String blockData = database.get(coord.writeToString());
+      byte[] blockData = database.get(coord.write());
       if (null != blockData) {
          Block block = new Block();
-         block.readFromString(blockData);
+         block.read(blockData);
          return block;
       } else {
          throw new MTLibException("No block at: " + coord);
@@ -45,11 +45,11 @@ public class Map implements MapEntryIterator {
    }
 
    @Override
-   public void mapEntry(String key, String value) throws MTLibException {
+   public void mapEntry(String key, byte[] value) throws MTLibException {
       Coord coord = new Coord();
-      coord.readFromString(key);
+      coord.read(key.getBytes());
       Block block = new Block();
-      block.readFromString(value);
+      block.read(value);
       this.blockIterator.block(coord, block);
    }
 }

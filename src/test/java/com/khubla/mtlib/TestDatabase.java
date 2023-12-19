@@ -13,7 +13,7 @@ public class TestDatabase {
    public void testGet() {
       try {
          Database database = new Database(new TestingDatabaseConfig());
-         String block = database.get("16777205");
+         byte[] block = database.get("16777205");
          assertNotNull(block);
          //         System.out.println(block);
       } catch (final Exception e) {

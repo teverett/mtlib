@@ -1,6 +1,6 @@
 package com.khubla.mtlib.domain;
 
-public class Coord implements StringSerializable {
+public class Coord implements Persistable {
    private long x;
    private long y;
    private long z;
@@ -47,8 +47,8 @@ public class Coord implements StringSerializable {
 
    @Override
    // https://github.com/minetest/minetest/blob/master/src/database/database.cpp
-   public void readFromString(String s) {
-      long ll = Long.parseLong(s);
+   public void read(byte[] s) {
+      long ll = Long.parseLong(new String(s));
       this.x = ll % 4096;
       ll = (ll - x) / 4096;
       this.y = ll % 4096;
@@ -58,8 +58,8 @@ public class Coord implements StringSerializable {
 
    @Override
    // https://github.com/minetest/minetest/blob/master/src/database/database.cpp
-   public String writeToString() {
+   public byte[] write() {
       long ll = z * 0x1000000 + y * 0x1000 + x;
-      return Long.toString(ll);
+      return Long.toString(ll).getBytes();
    }
 }

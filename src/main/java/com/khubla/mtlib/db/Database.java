@@ -25,16 +25,20 @@ public class Database {
       this.jedisPool = new JedisPool(databaseConfig.getHostname(), databaseConfig.getPort());
    }
 
-   public String get(long key) {
+   public byte[] get(long key) {
       return get(Long.toString(key));
    }
 
-   public String get(String key) {
+   public byte[] get(byte[] key) {
+      return get(new String(key));
+   }
+
+   public byte[] get(String key) {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(databaseConfig.getPassword());
          // return
-         return jedis.hget(databaseConfig.getHash(), key);
+         return jedis.hget(databaseConfig.getHash().getBytes(), key.getBytes());
       }
    }
 
@@ -47,12 +51,12 @@ public class Database {
       }
    }
 
-   public void set(String key, String value) {
+   public void set(String key, byte[] value) {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(databaseConfig.getPassword());
          // return
-         jedis.hset(databaseConfig.getHash(), key, value);
+         jedis.hset(databaseConfig.getHash().getBytes(), key.getBytes(), value);
       }
    }
 
@@ -89,7 +93,7 @@ public class Database {
             ScanResult<Map.Entry<String, String>> scanResult = jedis.hscan(databaseConfig.getHash(), cur, scanParams);
             List<Map.Entry<String, String>> result = scanResult.getResult();
             for (Map.Entry<String, String> e : result) {
-               mapEntryIterator.mapEntry(e.getKey(), e.getValue());
+               mapEntryIterator.mapEntry(e.getKey(), e.getValue().getBytes());
             }
             cur = scanResult.getCursor();
             if (cur.equals("0")) {

@@ -11,9 +11,9 @@ public class TestCoord {
       try {
          Coord coord1 = new Coord(10, 200, 4000);
          //    System.out.println(coord1);
-         String c = coord1.writeToString();
+         byte[] c = coord1.write();
          Coord coord2 = new Coord();
-         coord2.readFromString(c);
+         coord2.read(c);
          //   System.out.println(coord2);
          assertEquals(coord1.getX(), coord2.getX());
          assertEquals(coord1.getY(), coord2.getY());

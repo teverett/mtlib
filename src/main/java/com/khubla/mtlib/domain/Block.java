@@ -1,14 +1,11 @@
 package com.khubla.mtlib.domain;
 
-import com.khubla.mtlib.compress.ZStdCompression;
 import com.khubla.mtlib.util.HexDump;
 import com.khubla.mtlib.util.MTLibException;
-import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
-public class Block implements StringSerializable {
+public class Block implements Persistable {
    private static final byte EXPECTED_SERIALIZATION_VERSION = 29;
    private final NameIdMapping nameIdMapping = new NameIdMapping();
    private byte flags;
@@ -23,20 +20,19 @@ public class Block implements StringSerializable {
    private byte[] node_timers;
 
    @Override
-   public void readFromString(String s) throws MTLibException {
+   public void read(byte[] b) throws MTLibException {
       try {
          // all sorts of flapping around to get a DataInputStream
-         byte[] compresseddata = s.getBytes();
-         byte version = compresseddata[0];
+         byte version = b[0];
          if (version == EXPECTED_SERIALIZATION_VERSION) {
-            HexDump.dump(compresseddata, 128);
-            compresseddata = ArrayUtils.remove(compresseddata, 0);
-            byte[] uncompressedData = ZStdCompression.decompress(compresseddata);
+            HexDump.dump(b, 128);
+            //   compresseddata = ArrayUtils.remove(compresseddata, 0);
+            //   byte[] uncompressedData = ZStdCompression.decompress(compresseddata);
             //       byte[] uncompressedData = compresseddata;
-            ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
-            DataInputStream dis = new DataInputStream(bais);
+            //   ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
+            //   DataInputStream dis = new DataInputStream(bais);
             // read the data
-            readFromDataInputStream(dis);
+            //    readFromDataInputStream(dis);
          } else {
             throw new MTLibException("Unexpected serialization version: " + version);
          }
@@ -78,7 +74,7 @@ public class Block implements StringSerializable {
    }
 
    @Override
-   public String writeToString() {
+   public byte[] write() {
       return null;
    }
 }
