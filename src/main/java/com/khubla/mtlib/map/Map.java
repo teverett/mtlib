@@ -1,8 +1,7 @@
 package com.khubla.mtlib.map;
 
-import com.khubla.mtlib.db.Database;
 import com.khubla.mtlib.db.DatabaseConfig;
-import com.khubla.mtlib.db.MapEntryIterator;
+import com.khubla.mtlib.db.DatabaseEntryIterator;
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
 import com.khubla.mtlib.util.MTLibException;
@@ -10,13 +9,13 @@ import com.khubla.mtlib.util.MTLibException;
 /**
  * Minetest database
  */
-public class Map implements MapEntryIterator {
-   private final Database database;
+public class Map implements DatabaseEntryIterator {
+   private final com.khubla.mtlib.db.Database database;
    private final BlockIterator blockIterator;
 
    public Map(DatabaseConfig databaseConfig, BlockIterator blockIterator) {
       this.blockIterator = blockIterator;
-      this.database = new Database(databaseConfig);
+      this.database = new com.khubla.mtlib.db.Database(databaseConfig);
    }
 
    public long size() {
@@ -45,7 +44,7 @@ public class Map implements MapEntryIterator {
    }
 
    @Override
-   public void mapEntry(String key, byte[] value) throws MTLibException {
+   public void entry(String key, byte[] value) throws MTLibException {
       Coord coord = new Coord();
       coord.read(key.getBytes());
       Block block = new Block();

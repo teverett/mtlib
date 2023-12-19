@@ -38,5 +38,13 @@ public class MetadataList implements StreamPersistable {
 
    @Override
    public void write(DataOutputStream dos) throws MTLibException {
+      try {
+         for (int i = 0; i < count; i++) {
+            Metadata metadata = this.lst.get(i);
+            metadata.write(dos);
+         }
+      } catch (Exception e) {
+         throw new MTLibException("Exception in write", e);
+      }
    }
 }

@@ -49,5 +49,15 @@ public class Metadata implements StreamPersistable {
 
    @Override
    public void write(DataOutputStream dos) throws MTLibException {
+      try {
+         dos.writeShort(this.position);
+         dos.writeInt(this.num_vars);
+         for (int i = 0; i < num_vars; i++) {
+            MetadataVar metadataVar = this.metadataVars.get(i);
+            metadataVar.write(dos);
+         }
+      } catch (Exception e) {
+         throw new MTLibException("Exception in write", e);
+      }
    }
 }

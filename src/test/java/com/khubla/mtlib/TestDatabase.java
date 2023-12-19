@@ -51,7 +51,7 @@ public class TestDatabase {
    public void testKeyIterator() {
       try {
          Database database = new Database(new TestingDatabaseConfig());
-         database.iterateMapEntries(new TestingMapEntryIterator());
+         database.iterateMapEntries(new TestingDatabaseEntryIterator());
       } catch (final Exception e) {
          e.printStackTrace();
       }

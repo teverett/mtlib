@@ -81,7 +81,7 @@ public class Database {
    /**
     * paged iterate of map entries
     */
-   public void iterateMapEntries(MapEntryIterator mapEntryIterator) throws MTLibException {
+   public void iterateMapEntries(DatabaseEntryIterator databaseEntryIterator) throws MTLibException {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(databaseConfig.getPassword());
@@ -94,7 +94,7 @@ public class Database {
             List<Map.Entry<String, String>> result = scanResult.getResult();
             for (Map.Entry<String, String> e : result) {
                byte[] bb = this.get(e.getKey());
-               mapEntryIterator.mapEntry(e.getKey(), bb);
+               databaseEntryIterator.entry(e.getKey(), bb);
             }
             cur = scanResult.getCursor();
             if (cur.equals("0")) {
