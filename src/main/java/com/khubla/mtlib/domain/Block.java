@@ -1,6 +1,7 @@
 package com.khubla.mtlib.domain;
 
 import com.khubla.mtlib.compress.ZStdCompression;
+import com.khubla.mtlib.domain.metadata.MetadataList;
 import com.khubla.mtlib.util.MTLibException;
 import org.apache.commons.lang3.ArrayUtils;
 

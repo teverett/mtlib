@@ -1,5 +1,6 @@
-package com.khubla.mtlib.domain;
+package com.khubla.mtlib.domain.metadata;
 
+import com.khubla.mtlib.domain.StreamPersistable;
 import com.khubla.mtlib.util.MTLibException;
 import com.khubla.mtlib.util.StringPersistence;
 

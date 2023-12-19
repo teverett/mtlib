@@ -1,5 +1,7 @@
-package com.khubla.mtlib.domain;
+package com.khubla.mtlib.domain.metadata;
 
+import com.khubla.mtlib.domain.StreamPersistable;
+import com.khubla.mtlib.domain.inventory.Inventory;
 import com.khubla.mtlib.util.MTLibException;
 
 import java.io.DataInputStream;
@@ -12,6 +14,14 @@ public class Metadata implements StreamPersistable {
    private short position;
    private int num_vars;
    private Inventory inventory;
+
+   public Inventory getInventory() {
+      return inventory;
+   }
+
+   public void setInventory(Inventory inventory) {
+      this.inventory = inventory;
+   }
 
    public List<MetadataVar> getMetadataVars() {
       return metadataVars;
