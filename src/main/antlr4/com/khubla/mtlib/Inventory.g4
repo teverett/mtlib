@@ -13,11 +13,19 @@ line
    ;
 
 listline
-   : LIST ID NUM (item | EMPTY)* ENDLIST
+   : LIST ID NUM (item | width | EMPTY)* ENDLIST
+   ;
+
+width
+   : WDITH NUM
    ;
 
 item
    : ITEM ID NUM*
+   ;
+
+WDITH
+   : 'Width'
    ;
 
 EMPTY
