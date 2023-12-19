@@ -9,11 +9,11 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
 import static com.khubla.mtlib.domain.Constants.BLOCK_SIZE;
+import static com.khubla.mtlib.domain.Constants.EXPECTED_SERIALIZATION_VERSION;
 
 // https://github.com/minetest/minetest/blob/5d3e83017679317c27fe02b7087effd9d67f79cc/src/map.cpp#L1799
 // https://github.com/minetest/minetest/blob/master/doc/world_format.md
 public class Block implements BytePersistable {
-   private static final byte EXPECTED_SERIALIZATION_VERSION = 29;
    private NameIdMapping nameIdMapping;
    private byte flags;
    private short m_lighting_complete;
