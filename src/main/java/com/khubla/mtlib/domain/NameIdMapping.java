@@ -1,10 +1,10 @@
 package com.khubla.mtlib.domain;
 
+import com.khubla.mtlib.map.StringSZ;
 import com.khubla.mtlib.util.MTLibException;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +19,7 @@ public class NameIdMapping implements StreamPersistable {
             short size = dis.readShort();
             for (int i = 0; i < size; i++) {
                short id = dis.readShort();
-               String s = readStringSZ(dis);
+               String s = StringSZ.read(dis);
                nameToIdMap.put(s, id);
                idToNameMap.put(id, s);
             }
@@ -37,30 +37,10 @@ public class NameIdMapping implements StreamPersistable {
          dos.writeShort(nameToIdMap.size());
          for (Map.Entry<Short, String> entry : idToNameMap.entrySet()) {
             dos.writeShort(entry.getKey());
-            writeStringSZ(dos, entry.getValue());
+            StringSZ.write(dos, entry.getValue());
          }
       } catch (Exception e) {
          throw new MTLibException("Exception in write", e);
       }
-   }
-
-   /**
-    * read a null terminated string
-    */
-   private String readStringSZ(DataInputStream dis) throws IOException {
-      StringBuilder sb = new StringBuilder();
-      byte b = dis.readByte();
-      while (b != 0) {
-         sb.append((char) b);
-         b = dis.readByte();
-      }
-      return sb.toString();
-   }
-
-   private void writeStringSZ(DataOutputStream dos, String str) throws IOException {
-      for (int i = 0; i < str.length(); i++) {
-         dos.writeByte((byte) str.charAt(i));
-      }
-      dos.writeByte((byte) 0);
    }
 }
