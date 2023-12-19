@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory implements StreamPersistable {
-   private String inventoryString;
    private final List<InventoryList> inventoryLists = new ArrayList<InventoryList>();
+   private String inventoryString;
 
    public String getInventoryString() {
       return inventoryString;

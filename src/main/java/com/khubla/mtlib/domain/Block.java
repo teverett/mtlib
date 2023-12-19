@@ -29,6 +29,22 @@ public class Block implements BytePersistable {
    private byte version;
    private NodeTimers nodeTimers;
 
+   public byte getVersion() {
+      return version;
+   }
+
+   public void setVersion(byte version) {
+      this.version = version;
+   }
+
+   public NodeTimers getNodeTimers() {
+      return nodeTimers;
+   }
+
+   public void setNodeTimers(NodeTimers nodeTimers) {
+      this.nodeTimers = nodeTimers;
+   }
+
    @Override
    public void read(byte[] b) throws MTLibException {
       try {
