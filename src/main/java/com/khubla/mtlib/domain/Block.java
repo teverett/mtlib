@@ -1,7 +1,9 @@
 package com.khubla.mtlib.domain;
 
+import com.khubla.mtlib.compress.ZStdCompression;
 import com.khubla.mtlib.util.HexDump;
 import com.khubla.mtlib.util.MTLibException;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.DataInputStream;
 
@@ -26,8 +28,8 @@ public class Block implements BytePersistable {
          byte version = b[0];
          if (version == EXPECTED_SERIALIZATION_VERSION) {
             HexDump.dump(b, 128);
-            //   compresseddata = ArrayUtils.remove(compresseddata, 0);
-            //   byte[] uncompressedData = ZStdCompression.decompress(compresseddata);
+            b = ArrayUtils.remove(b, 0);
+            byte[] uncompressedData = ZStdCompression.decompress(b);
             //       byte[] uncompressedData = compresseddata;
             //   ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
             //   DataInputStream dis = new DataInputStream(bais);
