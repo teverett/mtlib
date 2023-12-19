@@ -17,7 +17,6 @@ public class TestZLibCompression {
          //      System.out.println(TEST_STRING.length());
          byte[] compressed = ZLibCompression.compress(TEST_STRING.getBytes(StandardCharsets.UTF_8));
          assertNotNull(compressed);
-         //     System.out.println(compressed.length);
          byte[] decompressed = ZLibCompression.decompress(compressed);
          String s = new String(decompressed, StandardCharsets.UTF_8);
          assertNotNull(decompressed);

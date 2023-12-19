@@ -15,7 +15,6 @@ public class TestDatabase {
          Database database = new Database(new TestingDatabaseConfig());
          byte[] block = database.get("-184561686");
          assertNotNull(block);
-         //         System.out.println(block);
       } catch (final Exception e) {
          e.printStackTrace();
       }
@@ -27,7 +26,6 @@ public class TestDatabase {
          Database database = new Database(new TestingDatabaseConfig());
          long size = database.size();
          assertTrue(size != 0);
-         //       System.out.println("Database size:" + size);
       } catch (final Exception e) {
          e.printStackTrace();
       }
