@@ -34,7 +34,8 @@ public class Map implements DatabaseEntryIterator {
    }
 
    public void set(Coord coord, Block block) {
-      // TODO
+      byte[] data = block.write();
+      database.set(coord.write(), data);
    }
 
    public void iterateBlocks() throws MTLibException {

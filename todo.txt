@@ -1,0 +1,4 @@
+
+logging
+unit tests for each domain object
+read the rest of block

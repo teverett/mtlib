@@ -52,11 +52,15 @@ public class Database {
    }
 
    public void set(String key, byte[] value) {
+      set(key.getBytes(), value);
+   }
+
+   public void set(byte[] key, byte[] value) {
       try (Jedis jedis = jedisPool.getResource()) {
          // auth
          jedis.auth(databaseConfig.getPassword());
          // return
-         jedis.hset(databaseConfig.getHash().getBytes(), key.getBytes(), value);
+         jedis.hset(databaseConfig.getHash().getBytes(), key, value);
       }
    }
 
