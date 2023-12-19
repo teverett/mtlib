@@ -1,0 +1,18 @@
+List foo 4
+Item default:sapling
+Item default:sword_stone 1 10647
+Item default:dirt 99
+Empty
+EndInventoryList
+List bar 9
+Empty
+Empty
+Empty
+Empty
+Empty
+Empty
+Empty
+Empty
+Empty
+EndInventoryList
+EndInventory
