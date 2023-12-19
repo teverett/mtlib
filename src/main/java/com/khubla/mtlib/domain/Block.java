@@ -1,6 +1,5 @@
 package com.khubla.mtlib.domain;
 
-import com.github.luben.zstd.Zstd;
 import com.khubla.mtlib.compress.ZStdCompression;
 import com.khubla.mtlib.util.HexDump;
 import com.khubla.mtlib.util.MTLibException;
@@ -8,7 +7,6 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.nio.ByteBuffer;
 
 public class Block implements StringSerializable {
    private static final byte EXPECTED_SERIALIZATION_VERSION = 29;
@@ -33,10 +31,6 @@ public class Block implements StringSerializable {
          if (version == EXPECTED_SERIALIZATION_VERSION) {
             HexDump.dump(compresseddata, 128);
             compresseddata = ArrayUtils.remove(compresseddata, 0);
-            ByteBuffer in = ByteBuffer.wrap(compresseddata);
-            byte[] outbytes = new byte[10000];
-            ByteBuffer out = ByteBuffer.wrap(outbytes);
-            Zstd.decompress(outbytes, compresseddata);
             byte[] uncompressedData = ZStdCompression.decompress(compresseddata);
             //       byte[] uncompressedData = compresseddata;
             ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);

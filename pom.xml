@@ -16,7 +16,6 @@
         <jedis.version>5.1.0</jedis.version>
         <commons.io.version>2.15.1</commons.io.version>
         <aircompressor.version>0.25</aircompressor.version>
-        <zstd-jni.version>1.5.5-11</zstd-jni.version>
         <commons-lang3.version>3.14.0</commons-lang3.version>
     </properties>
     <developers>
@@ -61,16 +60,15 @@
             <version>${commons.io.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.luben</groupId>
-            <artifactId>zstd-jni</artifactId>
-            <version>${zstd-jni.version}</version>
+            <groupId>io.airlift</groupId>
+            <artifactId>aircompressor</artifactId>
+            <version>${aircompressor.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
-
     </dependencies>
     <build>
         <plugins>
