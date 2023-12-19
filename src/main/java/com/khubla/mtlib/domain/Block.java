@@ -2,6 +2,7 @@ package com.khubla.mtlib.domain;
 
 import com.khubla.mtlib.compress.ZStdCompression;
 import com.khubla.mtlib.domain.metadata.MetadataList;
+import com.khubla.mtlib.domain.staticobject.StaticObjects;
 import com.khubla.mtlib.util.MTLibException;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -14,6 +15,7 @@ import static com.khubla.mtlib.domain.Constants.EXPECTED_SERIALIZATION_VERSION;
 // https://github.com/minetest/minetest/blob/5d3e83017679317c27fe02b7087effd9d67f79cc/src/map.cpp#L1799
 // https://github.com/minetest/minetest/blob/master/doc/world_format.md
 public class Block implements BytePersistable {
+   private final String key;
    private NameIdMapping nameIdMapping;
    private byte flags;
    private short m_lighting_complete;
@@ -28,6 +30,23 @@ public class Block implements BytePersistable {
    private MetadataList metadataList;
    private byte version;
    private NodeTimers nodeTimers;
+   private StaticObjects staticObjects;
+
+   public Block(String key) {
+      this.key = key;
+   }
+
+   public String getKey() {
+      return key;
+   }
+
+   public StaticObjects getStaticObjects() {
+      return staticObjects;
+   }
+
+   public void setStaticObjects(StaticObjects staticObjects) {
+      this.staticObjects = staticObjects;
+   }
 
    public byte getVersion() {
       return version;
@@ -102,6 +121,8 @@ public class Block implements BytePersistable {
             this.metadataList = new MetadataList(metadata_count);
             this.metadataList.read(dis, version);
          }
+         staticObjects = new StaticObjects();
+         staticObjects.read(dis, version);
          nodeTimers = new NodeTimers();
          nodeTimers.read(dis, version);
       } catch (Exception e) {

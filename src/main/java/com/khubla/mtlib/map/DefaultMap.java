@@ -44,7 +44,7 @@ public class DefaultMap implements Map, DatabaseEntryIterator {
    public Block getBlock(Coord coord) throws MTLibException {
       byte[] blockData = database.get(coord.write());
       if (null != blockData) {
-         Block block = new Block();
+         Block block = new Block(coord.toKey());
          block.read(blockData);
          return block;
       } else {
@@ -76,7 +76,7 @@ public class DefaultMap implements Map, DatabaseEntryIterator {
    public void entry(String key, byte[] value) throws MTLibException {
       Coord coord = new Coord();
       coord.read(key.getBytes());
-      Block block = new Block();
+      Block block = new Block(key);
       block.read(value);
       this.blockIterator.block(coord, block);
    }

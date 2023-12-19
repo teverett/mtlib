@@ -65,8 +65,11 @@ public class Coord implements BytePersistable {
    @Override
    // https://github.com/minetest/minetest/blob/master/src/database/database.cpp
    public byte[] write() {
-      long ll = z * 0x1000000 + y * 0x1000 + x;
-      return Long.toString(ll).getBytes();
+      return toKey().getBytes();
+   }
+
+   public String toKey() {
+      return Long.toString(z * 0x1000000 + y * 0x1000 + x);
    }
 
    private void validate(long x, long y, long z) throws MTLibException {
