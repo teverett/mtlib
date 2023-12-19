@@ -3,14 +3,14 @@ package com.khubla.mtlib;
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
 import com.khubla.mtlib.map.BlockIterator;
-import com.khubla.mtlib.map.Map;
+import com.khubla.mtlib.map.DefaultMap;
 import com.khubla.mtlib.util.MTLibException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestMapDump implements BlockIterator {
-   Map map = new Map(new TestingDatabaseConfig(), this);
+   DefaultMap map = new DefaultMap(new TestingDatabaseConfig(), this);
 
    @Test
    //@Disabled

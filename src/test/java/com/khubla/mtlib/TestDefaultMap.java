@@ -1,15 +1,15 @@
 package com.khubla.mtlib;
 
-import com.khubla.mtlib.map.Map;
+import com.khubla.mtlib.map.DefaultMap;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestMap {
+public class TestDefaultMap {
    @Test
    public void testSize() {
       try {
-         Map map = new Map(new TestingDatabaseConfig(), null);
+         DefaultMap map = new DefaultMap(new TestingDatabaseConfig(), null);
          long size = map.size();
          assertTrue(size != 0);
       } catch (final Exception e) {

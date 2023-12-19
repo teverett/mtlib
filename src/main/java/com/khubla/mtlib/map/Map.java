@@ -1,55 +1,15 @@
 package com.khubla.mtlib.map;
 
-import com.khubla.mtlib.db.DatabaseConfig;
-import com.khubla.mtlib.db.DatabaseEntryIterator;
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
 import com.khubla.mtlib.util.MTLibException;
 
-/**
- * Minetest database
- */
-public class Map implements DatabaseEntryIterator {
-   private final com.khubla.mtlib.db.Database database;
-   private final BlockIterator blockIterator;
+public interface Map {
+   long size();
 
-   public Map(DatabaseConfig databaseConfig, BlockIterator blockIterator) {
-      this.blockIterator = blockIterator;
-      this.database = new com.khubla.mtlib.db.Database(databaseConfig);
-   }
+   Block get(Coord coord) throws MTLibException;
 
-   public long size() {
-      return database.size();
-   }
+   void set(Coord coord, Block block) throws MTLibException;
 
-   public Block get(Coord coord) throws MTLibException {
-      byte[] blockData = database.get(coord.write());
-      if (null != blockData) {
-         Block block = new Block();
-         block.read(blockData);
-         return block;
-      } else {
-         throw new MTLibException("No block at: " + coord);
-      }
-   }
-
-   public void set(Coord coord, Block block) {
-      byte[] data = block.write();
-      database.set(coord.write(), data);
-   }
-
-   public void iterateBlocks() throws MTLibException {
-      if (null != this.blockIterator) {
-         database.iterateMapEntries(this);
-      }
-   }
-
-   @Override
-   public void entry(String key, byte[] value) throws MTLibException {
-      Coord coord = new Coord();
-      coord.read(key.getBytes());
-      Block block = new Block();
-      block.read(value);
-      this.blockIterator.block(coord, block);
-   }
+   void iterateBlocks() throws MTLibException;
 }
