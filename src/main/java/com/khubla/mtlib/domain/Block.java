@@ -23,12 +23,14 @@ public class Block implements BytePersistable {
    private byte metadata_version;
    private short metadata_count;
    private MetadataList metadataList;
+   private Inventory inventory;
+   private byte version;
 
    @Override
    public void read(byte[] b) throws MTLibException {
       try {
          // all sorts of flapping around to get a DataInputStream
-         byte version = b[0];
+         this.version = b[0];
          if (version == EXPECTED_SERIALIZATION_VERSION) {
             b = ArrayUtils.remove(b, 0);
             byte[] uncompressedData = ZStdCompression.decompress(b);
@@ -58,7 +60,7 @@ public class Block implements BytePersistable {
          }
          this.num_name_id_mappings = dis.readShort();
          nameIdMapping = new NameIdMapping(num_name_id_mappings);
-         nameIdMapping.read(dis);
+         nameIdMapping.read(dis, version);
          this.content_width = dis.readByte();
          if ((content_width != 1) && (content_width != 2)) {
             throw new MTLibException("Invalid content_width: " + content_width);
@@ -71,7 +73,7 @@ public class Block implements BytePersistable {
             throw new MTLibException("Invalid params_width: " + params_width);
          }
          this.nodeData = new NodeData();
-         this.nodeData.read(dis);
+         this.nodeData.read(dis, version);
          this.metadata_version = dis.readByte();
          if (0 != metadata_version) {
             if (2 != metadata_version) {
@@ -79,8 +81,10 @@ public class Block implements BytePersistable {
             }
             this.metadata_count = dis.readShort();
             this.metadataList = new MetadataList(metadata_count);
-            this.metadataList.read(dis);
+            this.metadataList.read(dis, version);
          }
+         this.inventory = new Inventory();
+         inventory.read(dis, version);
       } catch (Exception e) {
          throw new MTLibException("Exception in readFromDataInputStream", e);
       }

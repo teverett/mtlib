@@ -1,7 +1,7 @@
 package com.khubla.mtlib.domain;
 
 import com.khubla.mtlib.util.MTLibException;
-import com.khubla.mtlib.util.StringSZ;
+import com.khubla.mtlib.util.StringPersistence;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -36,10 +36,10 @@ public class MetadataVar implements StreamPersistable {
    }
 
    @Override
-   public void read(DataInputStream dis) throws MTLibException {
+   public void read(DataInputStream dis, byte version) throws MTLibException {
       try {
-         this.key = StringSZ.read16(dis);
-         this.value = StringSZ.read32(dis);
+         this.key = StringPersistence.read16(dis);
+         this.value = StringPersistence.read32(dis);
          this.is_private = dis.readByte();
          if ((0 != is_private) && (1 != is_private)) {
             throw new MTLibException("Invalid is_private: " + is_private);
@@ -50,10 +50,10 @@ public class MetadataVar implements StreamPersistable {
    }
 
    @Override
-   public void write(DataOutputStream dos) throws MTLibException {
+   public void write(DataOutputStream dos, byte version) throws MTLibException {
       try {
-         StringSZ.write16(dos, this.key);
-         StringSZ.write32(dos, this.value);
+         StringPersistence.write16(dos, this.key);
+         StringPersistence.write32(dos, this.value);
          dos.writeByte(this.is_private);
       } catch (Exception e) {
          throw new MTLibException("Exception in write", e);

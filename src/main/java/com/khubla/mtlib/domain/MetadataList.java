@@ -24,11 +24,11 @@ public class MetadataList implements StreamPersistable {
    }
 
    @Override
-   public void read(DataInputStream dis) throws MTLibException {
+   public void read(DataInputStream dis, byte version) throws MTLibException {
       try {
          for (int i = 0; i < count; i++) {
             Metadata metadata = new Metadata();
-            metadata.read(dis);
+            metadata.read(dis, version);
             lst.add(metadata);
          }
       } catch (Exception e) {
@@ -37,11 +37,11 @@ public class MetadataList implements StreamPersistable {
    }
 
    @Override
-   public void write(DataOutputStream dos) throws MTLibException {
+   public void write(DataOutputStream dos, byte version) throws MTLibException {
       try {
          for (int i = 0; i < count; i++) {
             Metadata metadata = this.lst.get(i);
-            metadata.write(dos);
+            metadata.write(dos, version);
          }
       } catch (Exception e) {
          throw new MTLibException("Exception in write", e);

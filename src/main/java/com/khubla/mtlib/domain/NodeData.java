@@ -27,7 +27,7 @@ public class NodeData implements StreamPersistable {
       return (z * 16 * 16 + y * 16 + x);
    }
 
-   public void read(DataInputStream dis) throws MTLibException {
+   public void read(DataInputStream dis, byte version) throws MTLibException {
       try {
          for (int i = 0; i < NODES_PER_BLOCK; i++) {
             param0[i] = dis.readShort();
@@ -43,7 +43,7 @@ public class NodeData implements StreamPersistable {
       }
    }
 
-   public void write(DataOutputStream dos) throws MTLibException {
+   public void write(DataOutputStream dos, byte version) throws MTLibException {
       //      try {
       //         dos.writeShort(param0);
       //         dos.writeShort(param1);

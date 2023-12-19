@@ -33,13 +33,13 @@ public class Metadata implements StreamPersistable {
    }
 
    @Override
-   public void read(DataInputStream dis) throws MTLibException {
+   public void read(DataInputStream dis, byte version) throws MTLibException {
       try {
          this.position = dis.readShort();
          this.num_vars = dis.readInt();
          for (int i = 0; i < num_vars; i++) {
             MetadataVar metadataVar = new MetadataVar();
-            metadataVar.read(dis);
+            metadataVar.read(dis, version);
             metadataVars.add(metadataVar);
          }
       } catch (Exception e) {
@@ -48,13 +48,13 @@ public class Metadata implements StreamPersistable {
    }
 
    @Override
-   public void write(DataOutputStream dos) throws MTLibException {
+   public void write(DataOutputStream dos, byte version) throws MTLibException {
       try {
          dos.writeShort(this.position);
          dos.writeInt(this.num_vars);
          for (int i = 0; i < num_vars; i++) {
             MetadataVar metadataVar = this.metadataVars.get(i);
-            metadataVar.write(dos);
+            metadataVar.write(dos, version);
          }
       } catch (Exception e) {
          throw new MTLibException("Exception in write", e);
