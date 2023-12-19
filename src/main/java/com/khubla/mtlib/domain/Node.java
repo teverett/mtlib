@@ -5,7 +5,7 @@ import com.khubla.mtlib.util.MTLibException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-public class Node {
+public class Node implements StreamPersistable {
    private short param0;
    private short param1;
    private short param2;

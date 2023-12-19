@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NameIdMapping {
+public class NameIdMapping implements StreamPersistable {
    private final HashMap<String, Short> nameToIdMap = new HashMap<String, Short>();
    private final HashMap<Short, String> idToNameMap = new HashMap<Short, String>();
 

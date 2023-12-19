@@ -5,7 +5,7 @@ import com.khubla.mtlib.util.MTLibException;
 
 import java.io.DataInputStream;
 
-public class Block implements Persistable {
+public class Block implements BytePersistable {
    private static final byte EXPECTED_SERIALIZATION_VERSION = 29;
    private final NameIdMapping nameIdMapping = new NameIdMapping();
    private byte flags;

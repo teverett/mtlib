@@ -1,6 +1,6 @@
 package com.khubla.mtlib.domain;
 
-public class Coord implements Persistable {
+public class Coord implements BytePersistable {
    private long x;
    private long y;
    private long z;
