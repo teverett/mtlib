@@ -11,20 +11,22 @@ import java.util.Map;
 public class NameIdMapping implements StreamPersistable {
    private final HashMap<String, Short> nameToIdMap = new HashMap<String, Short>();
    private final HashMap<Short, String> idToNameMap = new HashMap<Short, String>();
+   private final short count;
+
+   public NameIdMapping(short count) {
+      this.count = count;
+   }
 
    public void read(DataInputStream dis) throws MTLibException {
       try {
-         byte zero = dis.readByte();
-         if (zero == 0) {
-            short size = dis.readShort();
-            for (int i = 0; i < size; i++) {
-               short id = dis.readShort();
-               String s = StringSZ.read(dis);
-               nameToIdMap.put(s, id);
-               idToNameMap.put(id, s);
-            }
-         } else {
-            throw new MTLibException("Unexpected zero byte was not zero " + zero);
+         for (int i = 0; i < count; i++) {
+            short id = dis.readShort();
+            short name_len = dis.readShort();
+            byte[] name = new byte[name_len];
+            dis.read(name, 0, name_len);
+            String s = new String(name);
+            nameToIdMap.put(s, id);
+            idToNameMap.put(id, s);
          }
       } catch (Exception e) {
          throw new MTLibException("Exception in read", e);

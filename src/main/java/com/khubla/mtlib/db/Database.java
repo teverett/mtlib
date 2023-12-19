@@ -93,7 +93,8 @@ public class Database {
             ScanResult<Map.Entry<String, String>> scanResult = jedis.hscan(databaseConfig.getHash(), cur, scanParams);
             List<Map.Entry<String, String>> result = scanResult.getResult();
             for (Map.Entry<String, String> e : result) {
-               mapEntryIterator.mapEntry(e.getKey(), e.getValue().getBytes());
+               byte[] bb = this.get(e.getKey());
+               mapEntryIterator.mapEntry(e.getKey(), bb);
             }
             cur = scanResult.getCursor();
             if (cur.equals("0")) {
