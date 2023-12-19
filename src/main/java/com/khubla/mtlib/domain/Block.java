@@ -8,6 +8,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
+import static com.khubla.mtlib.domain.Constants.BLOCK_SIZE;
+
 // https://github.com/minetest/minetest/blob/5d3e83017679317c27fe02b7087effd9d67f79cc/src/map.cpp#L1799
 // https://github.com/minetest/minetest/blob/master/doc/world_format.md
 public class Block implements BytePersistable {
@@ -204,10 +206,23 @@ public class Block implements BytePersistable {
       return null;
    }
 
+   void validateBlockRelativeCoords(short x, short y, short z) throws MTLibException {
+      if ((x < 0) || (x > +BLOCK_SIZE - 1)) {
+         throw new MTLibException("Invalid x:" + x);
+      }
+      if ((y < 0) || (y > +BLOCK_SIZE - 1)) {
+         throw new MTLibException("Invalid y:" + y);
+      }
+      if ((z < 0) || (z > +BLOCK_SIZE - 1)) {
+         throw new MTLibException("Invalid z:" + z);
+      }
+   }
+
    /*
     * Coord is relative to the block, not the world
     */
    public Node getNode(short x, short y, short z) throws MTLibException {
+      validateBlockRelativeCoords(x, y, z);
       if (null != this.nodeData) {
          return this.nodeData.getNode(x, y, z);
       }
@@ -218,6 +233,7 @@ public class Block implements BytePersistable {
     * Coord is relative to the block, not the world
     */
    public void setNode(short x, short y, short z, Node node) throws MTLibException {
+      validateBlockRelativeCoords(x, y, z);
       if ((null != this.nodeData) && (null != node)) {
          this.nodeData.setNode(x, y, z, node);
       }
