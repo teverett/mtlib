@@ -24,6 +24,19 @@ public class DefaultMap implements Map, DatabaseEntryIterator {
       this.database = new com.khubla.mtlib.db.Database(databaseConfig);
    }
 
+   /*
+    * return the coords of the block for any arbitrary coords
+    */
+   public static Coord getBlockCoord(Coord coord) throws MTLibException {
+      if (null != coord) {
+         long x = coord.getX() / 16;
+         long y = coord.getY() / 16;
+         long z = coord.getZ() / 16;
+         return new Coord(x * 16, y * 16, z * 16);
+      }
+      return null;
+   }
+
    public long size() {
       return database.size();
    }

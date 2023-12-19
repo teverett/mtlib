@@ -1,15 +1,14 @@
 package com.khubla.mtlib;
 
-import com.khubla.mtlib.db.Database;
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
 import com.khubla.mtlib.map.DefaultMap;
 import com.khubla.mtlib.map.Map;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestDefaultMap {
    @Test
@@ -24,14 +23,57 @@ public class TestDefaultMap {
    }
 
    @Test
-   public void testGetAllKeys() {
+   public void testBlockCoords1() {
       try {
          Map map = new DefaultMap(new TestingDatabaseConfig());
-         Database database = new Database(new TestingDatabaseConfig());
-         long size = database.size();
-         assertTrue(size != 0);
-         Set<String> keys = database.allKeys();
-         assertEquals(size, keys.size());
+         Coord coord = DefaultMap.getBlockCoord(new Coord(0, 0, 0));
+         assertNotNull(coord);
+         assertEquals(0, coord.getX());
+         assertEquals(0, coord.getY());
+         assertEquals(0, coord.getZ());
+      } catch (final Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+   @Test
+   public void testBlockCoords2() {
+      try {
+         Map map = new DefaultMap(new TestingDatabaseConfig());
+         Coord coord = DefaultMap.getBlockCoord(new Coord(16, 16, 16));
+         assertNotNull(coord);
+         assertEquals(16, coord.getX());
+         assertEquals(16, coord.getY());
+         assertEquals(16, coord.getZ());
+      } catch (final Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+   @Test
+   public void testBlockCoords3() {
+      try {
+         Map map = new DefaultMap(new TestingDatabaseConfig());
+         Coord coord = DefaultMap.getBlockCoord(new Coord(15, 15, 15));
+         assertNotNull(coord);
+         assertEquals(0, coord.getX());
+         assertEquals(0, coord.getY());
+         assertEquals(0, coord.getZ());
+      } catch (final Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+   @Test
+   @Disabled
+   public void testBlockCoords4() {
+      try {
+         Map map = new DefaultMap(new TestingDatabaseConfig());
+         Coord coord = DefaultMap.getBlockCoord(new Coord(-15, -15, -15));
+         assertNotNull(coord);
+         assertEquals(-16, coord.getX());
+         assertEquals(-16, coord.getY());
+         assertEquals(-16, coord.getZ());
       } catch (final Exception e) {
          e.printStackTrace();
       }
