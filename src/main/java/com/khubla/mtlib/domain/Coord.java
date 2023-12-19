@@ -1,6 +1,10 @@
 package com.khubla.mtlib.domain;
 
+import com.khubla.mtlib.util.MTLibException;
+
 public class Coord implements BytePersistable {
+   private static final long MAX_EXTENT = 30927;
+   private static final long MIN_EXTENT = -30912;
    private long x;
    private long y;
    private long z;
@@ -11,7 +15,8 @@ public class Coord implements BytePersistable {
       z = 0;
    }
 
-   public Coord(long x, long y, long z) {
+   public Coord(long x, long y, long z) throws MTLibException {
+      validate(x, y, z);
       this.x = x;
       this.y = y;
       this.z = z;
@@ -61,5 +66,17 @@ public class Coord implements BytePersistable {
    public byte[] write() {
       long ll = z * 0x1000000 + y * 0x1000 + x;
       return Long.toString(ll).getBytes();
+   }
+
+   private void validate(long x, long y, long z) throws MTLibException {
+      if ((x < MIN_EXTENT) || (x > +MAX_EXTENT)) {
+         throw new MTLibException("Invalid x:" + x);
+      }
+      if ((y < MIN_EXTENT) || (y > +MAX_EXTENT)) {
+         throw new MTLibException("Invalid y:" + y);
+      }
+      if ((z < MIN_EXTENT) || (z > +MAX_EXTENT)) {
+         throw new MTLibException("Invalid z:" + z);
+      }
    }
 }

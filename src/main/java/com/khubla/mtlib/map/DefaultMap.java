@@ -4,6 +4,7 @@ import com.khubla.mtlib.db.DatabaseConfig;
 import com.khubla.mtlib.db.DatabaseEntryIterator;
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
+import com.khubla.mtlib.domain.Node;
 import com.khubla.mtlib.util.MTLibException;
 
 /**
@@ -18,11 +19,16 @@ public class DefaultMap implements Map, DatabaseEntryIterator {
       this.database = new com.khubla.mtlib.db.Database(databaseConfig);
    }
 
+   public DefaultMap(DatabaseConfig databaseConfig) {
+      this.blockIterator = null;
+      this.database = new com.khubla.mtlib.db.Database(databaseConfig);
+   }
+
    public long size() {
       return database.size();
    }
 
-   public Block get(Coord coord) throws MTLibException {
+   public Block getBlock(Coord coord) throws MTLibException {
       byte[] blockData = database.get(coord.write());
       if (null != blockData) {
          Block block = new Block();
@@ -33,7 +39,7 @@ public class DefaultMap implements Map, DatabaseEntryIterator {
       }
    }
 
-   public void set(Coord coord, Block block) throws MTLibException {
+   public void setBlock(Coord coord, Block block) throws MTLibException {
       byte[] data = block.write();
       database.set(coord.write(), data);
    }
@@ -42,6 +48,15 @@ public class DefaultMap implements Map, DatabaseEntryIterator {
       if (null != this.blockIterator) {
          database.iterateMapEntries(this);
       }
+   }
+
+   @Override
+   public Node getNode(Coord coord) throws MTLibException {
+      return null;
+   }
+
+   @Override
+   public void setNode(Coord coord, Node node) throws MTLibException {
    }
 
    @Override

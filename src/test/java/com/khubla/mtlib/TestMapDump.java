@@ -26,7 +26,7 @@ public class TestMapDump implements BlockIterator {
    @Override
    public void block(Coord coord, Block block) throws MTLibException {
       System.out.println(coord.toString());
-      Block b = map.get(coord);
+      Block b = map.getBlock(coord);
       assertNotNull(b);
    }
 }
