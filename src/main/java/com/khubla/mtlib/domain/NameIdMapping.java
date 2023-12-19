@@ -33,10 +33,7 @@ public class NameIdMapping implements StreamPersistable {
       try {
          for (int i = 0; i < count; i++) {
             short id = dis.readShort();
-            short name_len = dis.readShort();
-            byte[] name = new byte[name_len];
-            dis.read(name, 0, name_len);
-            String s = new String(name);
+            String s = StringSZ.read16(dis);
             nameToIdMap.put(s, id);
             idToNameMap.put(id, s);
          }
@@ -51,7 +48,7 @@ public class NameIdMapping implements StreamPersistable {
          dos.writeShort(nameToIdMap.size());
          for (Map.Entry<Short, String> entry : idToNameMap.entrySet()) {
             dos.writeShort(entry.getKey());
-            StringSZ.write(dos, entry.getValue());
+            StringSZ.write16(dos, entry.getValue());
          }
       } catch (Exception e) {
          throw new MTLibException("Exception in write", e);
