@@ -2,9 +2,10 @@ package com.khubla.mtlib.domain;
 
 import com.khubla.mtlib.util.MTLibException;
 
+import static com.khubla.mtlib.domain.Constants.MAX_EXTENT;
+import static com.khubla.mtlib.domain.Constants.MIN_EXTENT;
+
 public class Coord implements BytePersistable {
-   private static final long MAX_EXTENT = 30927;
-   private static final long MIN_EXTENT = -30912;
    private long x;
    private long y;
    private long z;

@@ -203,4 +203,23 @@ public class Block implements BytePersistable {
    public byte[] write() {
       return null;
    }
+
+   /*
+    * Coord is relative to the block, not the world
+    */
+   public Node getNode(short x, short y, short z) throws MTLibException {
+      if (null != this.nodeData) {
+         return this.nodeData.getNode(x, y, z);
+      }
+      return null;
+   }
+
+   /*
+    * Coord is relative to the block, not the world
+    */
+   public void setNode(short x, short y, short z, Node node) throws MTLibException {
+      if ((null != this.nodeData) && (null != node)) {
+         this.nodeData.setNode(x, y, z, node);
+      }
+   }
 }

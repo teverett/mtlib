@@ -5,11 +5,32 @@ import com.khubla.mtlib.util.MTLibException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import static com.khubla.mtlib.domain.Constants.NODES_PER_BLOCK;
+
 public class NodeData implements StreamPersistable {
-   public final static int NODES_PER_BLOCK = 4096; // 16*16*16
-   private final short[] param0 = new short[4096];
-   private final byte[] param1 = new byte[4096];
-   private final byte[] param2 = new byte[4096];
+   private final short[] param0 = new short[NODES_PER_BLOCK];
+   private final byte[] param1 = new byte[NODES_PER_BLOCK];
+   private final byte[] param2 = new byte[NODES_PER_BLOCK];
+
+   private int nodeIndex(short x, short y, short z) {
+      return (z * 16 * 16 + y * 16 + x);
+   }
+
+   public Node getNode(short x, short y, short z) throws MTLibException {
+      int idx = nodeIndex(x, y, z);
+      Node node = new Node();
+      node.setParam0(param0[idx]);
+      node.setParam1(param1[idx]);
+      node.setParam2(param2[idx]);
+      return node;
+   }
+
+   public void setNode(short x, short y, short z, Node node) throws MTLibException {
+      int idx = nodeIndex(x, y, z);
+      param0[idx] = node.getParam0();
+      param1[idx] = node.getParam1();
+      param2[idx] = node.getParam2();
+   }
 
    public short[] getParam0() {
       return param0;
@@ -21,10 +42,6 @@ public class NodeData implements StreamPersistable {
 
    public byte[] getParam2() {
       return param2;
-   }
-
-   public int nodeIndex(short x, short y, short z) {
-      return (z * 16 * 16 + y * 16 + x);
    }
 
    public void read(DataInputStream dis, byte version) throws MTLibException {
