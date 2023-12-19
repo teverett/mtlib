@@ -11,6 +11,7 @@ public class Metadata implements StreamPersistable {
    private final List<MetadataVar> metadataVars = new ArrayList<MetadataVar>();
    private short position;
    private int num_vars;
+   private Inventory inventory;
 
    public List<MetadataVar> getMetadataVars() {
       return metadataVars;
@@ -42,6 +43,8 @@ public class Metadata implements StreamPersistable {
             metadataVar.read(dis, version);
             metadataVars.add(metadataVar);
          }
+         this.inventory = new Inventory();
+         inventory.read(dis, version);
       } catch (Exception e) {
          throw new MTLibException("Exception in read", e);
       }

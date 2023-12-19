@@ -36,7 +36,7 @@ public class StringPersistence {
       StringBuilder sb = new StringBuilder();
       byte b = dis.readByte();
       while (0 != b) {
-         sb.append(b);
+         sb.append((char) b);
          b = dis.readByte();
       }
       return sb.toString();

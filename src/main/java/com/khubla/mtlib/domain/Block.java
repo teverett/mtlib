@@ -23,8 +23,8 @@ public class Block implements BytePersistable {
    private byte metadata_version;
    private short metadata_count;
    private MetadataList metadataList;
-   private Inventory inventory;
    private byte version;
+   private NodeTimers nodeTimers;
 
    @Override
    public void read(byte[] b) throws MTLibException {
@@ -83,8 +83,8 @@ public class Block implements BytePersistable {
             this.metadataList = new MetadataList(metadata_count);
             this.metadataList.read(dis, version);
          }
-         this.inventory = new Inventory();
-         inventory.read(dis, version);
+         nodeTimers = new NodeTimers();
+         nodeTimers.read(dis, version);
       } catch (Exception e) {
          throw new MTLibException("Exception in readFromDataInputStream", e);
       }
