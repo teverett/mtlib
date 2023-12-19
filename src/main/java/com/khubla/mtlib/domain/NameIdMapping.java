@@ -17,6 +17,18 @@ public class NameIdMapping implements StreamPersistable {
       this.count = count;
    }
 
+   public HashMap<String, Short> getNameToIdMap() {
+      return nameToIdMap;
+   }
+
+   public HashMap<Short, String> getIdToNameMap() {
+      return idToNameMap;
+   }
+
+   public short getCount() {
+      return count;
+   }
+
    public void read(DataInputStream dis) throws MTLibException {
       try {
          for (int i = 0; i < count; i++) {
