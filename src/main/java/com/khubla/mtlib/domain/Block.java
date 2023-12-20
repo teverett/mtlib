@@ -8,7 +8,9 @@ import com.khubla.mtlib.worldmap.Node;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 
 import static com.khubla.mtlib.domain.Constants.BLOCK_SIZE;
 import static com.khubla.mtlib.domain.Constants.EXPECTED_SERIALIZATION_VERSION;
@@ -280,8 +282,38 @@ public class Block implements BytePersistable {
    }
 
    @Override
-   public byte[] write() {
-      return null;
+   public byte[] write() throws MTLibException {
+      try {
+         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+         DataOutputStream dos = new DataOutputStream(baos);
+         writeToDataOutputStream(dos);
+         return null;
+      } catch (Exception e) {
+         throw new MTLibException("Exception in write", e);
+      }
+   }
+
+   private void writeToDataOutputStream(DataOutputStream dos) throws MTLibException {
+      try {
+         /*
+          * flags
+          */
+         dos.writeByte(this.flags);
+         /*
+          * lighting
+          */
+         dos.writeShort(this.m_lighting_complete);
+         /*
+          * timestamp
+          */
+         dos.writeInt(this.timestamp);
+         /*
+          * name-id-mapping version
+          */
+         dos.writeByte(0);
+      } catch (Exception e) {
+         throw new MTLibException("Exception in writeToDataOutputStream", e);
+      }
    }
 
    void validateBlockRelativeCoords(short x, short y, short z) throws MTLibException {
