@@ -1,5 +1,6 @@
 package com.khubla.mtlib.map;
 
+import com.khubla.mtlib.util.MTLibException;
 import com.opencsv.CSVReader;
 
 import java.io.BufferedReader;
@@ -15,11 +16,11 @@ public class BlockTypes {
    private final HashMap<Short, String> blockTypesById = new HashMap<Short, String>();
    private final HashMap<String, Short> blockTypesByName = new HashMap<String, Short>();
 
-   private BlockTypes() {
+   private BlockTypes() throws MTLibException {
       load();
    }
 
-   public static BlockTypes getInstance() {
+   public static BlockTypes getInstance() throws MTLibException {
       if (null == instance) {
          instance = new BlockTypes();
       }
@@ -34,7 +35,7 @@ public class BlockTypes {
       return blockTypesByName;
    }
 
-   private void load() {
+   private void load() throws MTLibException {
       try {
          InputStream is = BlockTypes.class.getResourceAsStream(RESOURCE_FILE);
          List<String[]> data = null;
@@ -55,7 +56,7 @@ public class BlockTypes {
             }
          }
       } catch (Exception e) {
-         e.printStackTrace();
+         throw new MTLibException("Exception in load", e);
       }
    }
 
