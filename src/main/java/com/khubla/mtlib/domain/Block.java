@@ -145,8 +145,10 @@ public class Block implements BytePersistable {
                throw new MTLibException("Invalid metadata_version: " + metadata_version);
             }
             this.metadata_count = dis.readShort();
-            this.metadataList = new MetadataList(metadata_count);
-            this.metadataList.read(dis, version);
+            if (metadata_count > 0) {
+               this.metadataList = new MetadataList(metadata_count);
+               this.metadataList.read(dis, version);
+            }
          }
          /*
           * static objects

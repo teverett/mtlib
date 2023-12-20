@@ -28,10 +28,12 @@ public class StaticObjects implements StreamPersistable {
             throw new MTLibException("Invalid ver: " + ver);
          }
          this.count = dis.readShort();
-         for (int i = 0; i < count; i++) {
-            StaticObject staticObject = new StaticObject();
-            staticObject.read(dis, version);
-            staticObjects.add(staticObject);
+         if (this.count > 0) {
+            for (int i = 0; i < count; i++) {
+               StaticObject staticObject = new StaticObject();
+               staticObject.read(dis, version);
+               staticObjects.add(staticObject);
+            }
          }
       } catch (Exception e) {
          throw new MTLibException("Exception in read", e);
