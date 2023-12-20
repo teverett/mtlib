@@ -11,10 +11,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.TokenStream;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +46,40 @@ public class Inventory implements StreamPersistable {
       }
    }
 
+   private void writeString(DataOutputStream dos, String str) throws IOException {
+      dos.write(str.getBytes(), 0, str.length());
+   }
+
    @Override
    public void write(DataOutputStream dos, byte version) throws MTLibException {
+      try {
+         for (InventoryList inventoryList : this.inventoryLists) {
+            writeString(dos, "List ");
+            writeString(dos, inventoryList.getName() + " ");
+            // TODO this might have to change, its the number of slots
+            writeString(dos, Integer.toString(inventoryList.getDeclaredSize()));
+            writeString(dos, "\n");
+            for (InventoryItem inventoryItem : inventoryList.getInventoryItems()) {
+               writeString(dos, "Item ");
+               writeString(dos, inventoryItem.getName());
+               if (null != inventoryItem.getI1()) {
+                  writeString(dos, " " + inventoryItem.getI1().toString());
+               }
+               if (null != inventoryItem.getI2()) {
+                  writeString(dos, " " + inventoryItem.getI2().toString());
+               }
+               writeString(dos, "\n");
+            }
+            int numEmpties = inventoryList.getDeclaredSize() - inventoryList.getInventoryItems().size();
+            for (int i = 0; i < numEmpties; i++) {
+               writeString(dos, "Empty\n");
+            }
+            writeString(dos, "EndInventoryList\n");
+         }
+         writeString(dos, "EndInventory\n");
+      } catch (Exception e) {
+         throw new MTLibException("Exception in write", e);
+      }
    }
 
    private InventoryParser.FileContext parseInventory(String inventoryString) throws MTLibException {
