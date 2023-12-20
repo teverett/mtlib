@@ -8,11 +8,11 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestDatabase {
+public class TestDatabase extends BaseTest {
    @Test
    public void testGet() {
       try {
-         Database database = new Database(new TestingDatabaseConfig());
+         Database database = new Database(propertiesFileDatabaseConfig);
          byte[] block = database.get("-184561686");
          assertNotNull(block);
       } catch (final Exception e) {
@@ -23,7 +23,7 @@ public class TestDatabase {
    @Test
    public void testSize() {
       try {
-         Database database = new Database(new TestingDatabaseConfig());
+         Database database = new Database(propertiesFileDatabaseConfig);
          long size = database.size();
          assertTrue(size != 0);
       } catch (final Exception e) {
@@ -34,7 +34,7 @@ public class TestDatabase {
    @Test
    public void testKeys() {
       try {
-         Database database = new Database(new TestingDatabaseConfig());
+         Database database = new Database(propertiesFileDatabaseConfig);
          long size = database.size();
          assertTrue(size != 0);
          Set<String> keys = database.allKeys();
@@ -48,7 +48,7 @@ public class TestDatabase {
    @Disabled
    public void testKeyIterator() {
       try {
-         Database database = new Database(new TestingDatabaseConfig());
+         Database database = new Database(propertiesFileDatabaseConfig);
          database.iterateMapEntries(new TestingDatabaseEntryIterator());
       } catch (final Exception e) {
          e.printStackTrace();

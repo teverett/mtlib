@@ -1,4 +1,4 @@
-package com.khubla.mtlib.map;
+package com.khubla.mtlib.worldmap;
 
 import com.khubla.mtlib.util.MTLibException;
 import com.opencsv.CSVReader;
@@ -10,6 +10,9 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * minetest block types (just the base ones)
+ */
 public class BlockTypes {
    private static final String RESOURCE_FILE = "/blocktypes.txt";
    private static BlockTypes instance;
@@ -35,6 +38,11 @@ public class BlockTypes {
       return blockTypesByName;
    }
 
+   public void add(short id, String name) {
+      blockTypesById.put(id, name);
+      blockTypesByName.put(name, id);
+   }
+
    private void load() throws MTLibException {
       try {
          InputStream is = BlockTypes.class.getResourceAsStream(RESOURCE_FILE);
@@ -50,8 +58,7 @@ public class BlockTypes {
             if (null != data) {
                for (String[] line : data) {
                   int l = parseHex((line[0]));
-                  blockTypesById.put((short) l, line[1].trim());
-                  blockTypesByName.put(line[1].trim(), (short) l);
+                  this.add((short) l, line[1].trim());
                }
             }
          }

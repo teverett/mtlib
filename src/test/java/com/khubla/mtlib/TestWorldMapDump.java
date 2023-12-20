@@ -2,18 +2,19 @@ package com.khubla.mtlib;
 
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
-import com.khubla.mtlib.map.BlockIterator;
-import com.khubla.mtlib.map.DefaultMap;
 import com.khubla.mtlib.util.MTLibException;
+import com.khubla.mtlib.worldmap.BlockIterator;
+import com.khubla.mtlib.worldmap.DefaultWorldMap;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class TestMapDump implements BlockIterator {
-   DefaultMap map = new DefaultMap(new TestingDatabaseConfig(), this);
+public class TestWorldMapDump extends BaseTest implements BlockIterator {
+   DefaultWorldMap map = new DefaultWorldMap(propertiesFileDatabaseConfig, this);
 
    @Test
-   //@Disabled
+   @Disabled
    public void testMapDump() {
       try {
          map.iterateBlocks();

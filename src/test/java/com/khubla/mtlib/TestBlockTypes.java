@@ -1,6 +1,6 @@
 package com.khubla.mtlib;
 
-import com.khubla.mtlib.map.BlockTypes;
+import com.khubla.mtlib.worldmap.BlockTypes;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;

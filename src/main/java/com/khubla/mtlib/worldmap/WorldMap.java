@@ -1,11 +1,10 @@
-package com.khubla.mtlib.map;
+package com.khubla.mtlib.worldmap;
 
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
-import com.khubla.mtlib.domain.Node;
 import com.khubla.mtlib.util.MTLibException;
 
-public interface Map {
+public interface WorldMap {
    long size();
 
    Block getBlock(Coord coord) throws MTLibException;

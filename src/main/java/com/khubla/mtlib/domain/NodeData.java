@@ -1,6 +1,7 @@
 package com.khubla.mtlib.domain;
 
 import com.khubla.mtlib.util.MTLibException;
+import com.khubla.mtlib.worldmap.Node;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

@@ -63,11 +63,11 @@ public class Coord implements BytePersistable {
    }
 
    @Override
-   // https://github.com/minetest/minetest/blob/master/src/database/database.cpp
    public byte[] write() {
       return toKey().getBytes();
    }
 
+   // https://github.com/minetest/minetest/blob/master/src/database/database.cpp
    public String toKey() {
       return Long.toString(z * 0x1000000 + y * 0x1000 + x);
    }

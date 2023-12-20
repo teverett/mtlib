@@ -2,19 +2,19 @@ package com.khubla.mtlib;
 
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
-import com.khubla.mtlib.map.DefaultMap;
-import com.khubla.mtlib.map.Map;
+import com.khubla.mtlib.worldmap.DefaultWorldMap;
+import com.khubla.mtlib.worldmap.WorldMap;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class TestDefaultMap {
+public class TestDefaultWorldMap extends BaseTest {
    @Test
    public void testSize() {
       try {
-         DefaultMap map = new DefaultMap(new TestingDatabaseConfig(), null);
+         DefaultWorldMap map = new DefaultWorldMap(propertiesFileDatabaseConfig, null);
          Block block = map.getBlock(new Coord(0, 0, 0));
          assertNotNull(block);
       } catch (final Exception e) {
@@ -25,8 +25,8 @@ public class TestDefaultMap {
    @Test
    public void testBlockCoords1() {
       try {
-         Map map = new DefaultMap(new TestingDatabaseConfig());
-         Coord coord = DefaultMap.getBlockCoord(new Coord(0, 0, 0));
+         WorldMap worldMap = new DefaultWorldMap(propertiesFileDatabaseConfig);
+         Coord coord = DefaultWorldMap.getBlockCoord(new Coord(0, 0, 0));
          assertNotNull(coord);
          assertEquals(0, coord.getX());
          assertEquals(0, coord.getY());
@@ -39,8 +39,8 @@ public class TestDefaultMap {
    @Test
    public void testBlockCoords2() {
       try {
-         Map map = new DefaultMap(new TestingDatabaseConfig());
-         Coord coord = DefaultMap.getBlockCoord(new Coord(16, 16, 16));
+         WorldMap worldMap = new DefaultWorldMap(propertiesFileDatabaseConfig);
+         Coord coord = DefaultWorldMap.getBlockCoord(new Coord(16, 16, 16));
          assertNotNull(coord);
          assertEquals(16, coord.getX());
          assertEquals(16, coord.getY());
@@ -53,8 +53,8 @@ public class TestDefaultMap {
    @Test
    public void testBlockCoords3() {
       try {
-         Map map = new DefaultMap(new TestingDatabaseConfig());
-         Coord coord = DefaultMap.getBlockCoord(new Coord(15, 15, 15));
+         WorldMap worldMap = new DefaultWorldMap(propertiesFileDatabaseConfig);
+         Coord coord = DefaultWorldMap.getBlockCoord(new Coord(15, 15, 15));
          assertNotNull(coord);
          assertEquals(0, coord.getX());
          assertEquals(0, coord.getY());
@@ -68,8 +68,8 @@ public class TestDefaultMap {
    @Disabled
    public void testBlockCoords4() {
       try {
-         Map map = new DefaultMap(new TestingDatabaseConfig());
-         Coord coord = DefaultMap.getBlockCoord(new Coord(-15, -15, -15));
+         WorldMap worldMap = new DefaultWorldMap(propertiesFileDatabaseConfig);
+         Coord coord = DefaultWorldMap.getBlockCoord(new Coord(-15, -15, -15));
          assertNotNull(coord);
          assertEquals(-16, coord.getX());
          assertEquals(-16, coord.getY());

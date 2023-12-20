@@ -1,4 +1,4 @@
-package com.khubla.mtlib.map;
+package com.khubla.mtlib.worldmap;
 
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;

@@ -1,25 +1,24 @@
-package com.khubla.mtlib.map;
+package com.khubla.mtlib.worldmap;
 
 import com.khubla.mtlib.db.DatabaseConfig;
 import com.khubla.mtlib.db.DatabaseEntryIterator;
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
-import com.khubla.mtlib.domain.Node;
 import com.khubla.mtlib.util.MTLibException;
 
 /**
- * Minetest database
+ * Minetest World map
  */
-public class DefaultMap implements Map, DatabaseEntryIterator {
+public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
    private final com.khubla.mtlib.db.Database database;
    private final BlockIterator blockIterator;
 
-   public DefaultMap(DatabaseConfig databaseConfig, BlockIterator blockIterator) {
+   public DefaultWorldMap(DatabaseConfig databaseConfig, BlockIterator blockIterator) {
       this.blockIterator = blockIterator;
       this.database = new com.khubla.mtlib.db.Database(databaseConfig);
    }
 
-   public DefaultMap(DatabaseConfig databaseConfig) {
+   public DefaultWorldMap(DatabaseConfig databaseConfig) {
       this.blockIterator = null;
       this.database = new com.khubla.mtlib.db.Database(databaseConfig);
    }

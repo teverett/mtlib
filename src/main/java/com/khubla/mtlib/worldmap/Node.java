@@ -1,4 +1,4 @@
-package com.khubla.mtlib.domain;
+package com.khubla.mtlib.worldmap;
 
 /**
  * Note that Node is not a persistent class.  It exists for convenience

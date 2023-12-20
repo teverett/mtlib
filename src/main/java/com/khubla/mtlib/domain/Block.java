@@ -4,6 +4,7 @@ import com.khubla.mtlib.compress.ZStdCompression;
 import com.khubla.mtlib.domain.metadata.MetadataList;
 import com.khubla.mtlib.domain.staticobject.StaticObjects;
 import com.khubla.mtlib.util.MTLibException;
+import com.khubla.mtlib.worldmap.Node;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.ByteArrayInputStream;
