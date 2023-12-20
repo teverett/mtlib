@@ -1,7 +1,6 @@
 package com.khubla.mtlib.domain.metadata;
 
 import com.khubla.mtlib.domain.StreamPersistable;
-import com.khubla.mtlib.domain.inventory.Inventory;
 import com.khubla.mtlib.util.MTLibException;
 
 import java.io.DataInputStream;
@@ -11,17 +10,9 @@ import java.util.List;
 
 public class Metadata implements StreamPersistable {
    private final List<MetadataVar> metadataVars = new ArrayList<MetadataVar>();
+   private final V3s16 v3s16 = new V3s16();
    private short position;
    private int num_vars;
-   private Inventory inventory;
-
-   public Inventory getInventory() {
-      return inventory;
-   }
-
-   public void setInventory(Inventory inventory) {
-      this.inventory = inventory;
-   }
 
    public List<MetadataVar> getMetadataVars() {
       return metadataVars;
@@ -53,8 +44,6 @@ public class Metadata implements StreamPersistable {
             metadataVar.read(dis, version);
             metadataVars.add(metadataVar);
          }
-         this.inventory = new Inventory();
-         inventory.read(dis, version);
       } catch (Exception e) {
          throw new MTLibException("Exception in read", e);
       }
@@ -72,5 +61,11 @@ public class Metadata implements StreamPersistable {
       } catch (Exception e) {
          throw new MTLibException("Exception in write", e);
       }
+   }
+
+   public class V3s16 {
+      public short x;
+      public short y;
+      public short z;
    }
 }

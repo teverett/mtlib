@@ -1,6 +1,7 @@
 package com.khubla.mtlib.domain.metadata;
 
 import com.khubla.mtlib.domain.StreamPersistable;
+import com.khubla.mtlib.domain.inventory.Inventory;
 import com.khubla.mtlib.util.MTLibException;
 import com.khubla.mtlib.util.StringPersistence;
 
@@ -8,9 +9,18 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 public class MetadataVar implements StreamPersistable {
+   private Inventory inventory;
    private String key;
    private String value;
    private byte is_private;
+
+   public Inventory getInventory() {
+      return inventory;
+   }
+
+   public void setInventory(Inventory inventory) {
+      this.inventory = inventory;
+   }
 
    public String getKey() {
       return key;
@@ -45,6 +55,8 @@ public class MetadataVar implements StreamPersistable {
          if ((0 != is_private) && (1 != is_private)) {
             throw new MTLibException("Invalid is_private: " + is_private);
          }
+         inventory = new Inventory();
+         inventory.read(dis, version);
       } catch (Exception e) {
          throw new MTLibException("Exception in read", e);
       }

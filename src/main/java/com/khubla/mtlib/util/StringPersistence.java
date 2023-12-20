@@ -53,4 +53,19 @@ public class StringPersistence {
       }
       return sb.toString();
    }
+
+   /**
+    * read a string, stopping end the end of the string matches a marker
+    */
+   public static String readToMarker(DataInputStream dis, String marker) throws IOException {
+      String ret = "";
+      boolean more = true;
+      while (more) {
+         ret = ret + (char) dis.readByte();
+         if (ret.endsWith(marker)) {
+            more = false;
+         }
+      }
+      return ret;
+   }
 }

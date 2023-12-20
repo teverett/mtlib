@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory implements StreamPersistable {
+   private final static String MARKER = "EndInventory\n";
    private final List<InventoryList> inventoryLists = new ArrayList<InventoryList>();
    private String inventoryString;
 
@@ -32,7 +33,7 @@ public class Inventory implements StreamPersistable {
    @Override
    public void read(DataInputStream dis, byte version) throws MTLibException {
       try {
-         this.inventoryString = StringPersistence.readSz(dis);
+         this.inventoryString = StringPersistence.readToMarker(dis, MARKER);
          if (!this.inventoryString.isEmpty()) {
             InventoryParser.FileContext fileContext = parseInventory(this.inventoryString);
          }

@@ -160,6 +160,12 @@ public class Block implements BytePersistable {
           */
          nodeTimers = new NodeTimers();
          nodeTimers.read(dis, version);
+         /*
+          * done
+          */
+         if (0 != dis.available()) {
+            throw new MTLibException("Exception in readFromDataInputStream; stream is not empty");
+         }
       } catch (Exception e) {
          throw new MTLibException("Exception in readFromDataInputStream", e);
       }
