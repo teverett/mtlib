@@ -32,6 +32,7 @@ public class Block implements BytePersistable {
    private byte version;
    private NodeTimers nodeTimers;
    private StaticObjects staticObjects;
+   private long dataSize;
 
    public Block(String key) {
       this.key = key;
@@ -73,6 +74,7 @@ public class Block implements BytePersistable {
          if (version == EXPECTED_SERIALIZATION_VERSION) {
             b = ArrayUtils.remove(b, 0);
             byte[] uncompressedData = ZStdCompression.decompress(b);
+            this.dataSize = uncompressedData.length;
             ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
             DataInputStream dis = new DataInputStream(bais);
             // read the data
@@ -90,9 +92,21 @@ public class Block implements BytePersistable {
     */
    private void readFromDataInputStream(DataInputStream dis) throws MTLibException {
       try {
+         /*
+          * flags
+          */
          this.flags = dis.readByte();
+         /*
+          * lighting
+          */
          this.m_lighting_complete = dis.readShort();
+         /*
+          * timestamp
+          */
          this.timestamp = dis.readInt();
+         /*
+          * name-id-mapping
+          */
          this.name_id_mapping_version = dis.readByte();
          if (0 != name_id_mapping_version) {
             throw new MTLibException("Unexpected name_id_mapping_version: " + name_id_mapping_version);
@@ -100,6 +114,9 @@ public class Block implements BytePersistable {
          this.num_name_id_mappings = dis.readShort();
          nameIdMapping = new NameIdMapping(num_name_id_mappings);
          nameIdMapping.read(dis, version);
+         /*
+          * content width
+          */
          this.content_width = dis.readByte();
          if ((content_width != 1) && (content_width != 2)) {
             throw new MTLibException("Invalid content_width: " + content_width);
@@ -107,12 +124,21 @@ public class Block implements BytePersistable {
          if (2 != content_width) {
             throw new MTLibException("Invalid content_width: " + content_width);
          }
+         /*
+          * params width
+          */
          this.params_width = dis.readByte();
          if (params_width != 2) {
             throw new MTLibException("Invalid params_width: " + params_width);
          }
+         /*
+          * node data
+          */
          this.nodeData = new NodeData();
          this.nodeData.read(dis, version);
+         /*
+          * metadata
+          */
          this.metadata_version = dis.readByte();
          if (0 != metadata_version) {
             if (2 != metadata_version) {
@@ -122,8 +148,14 @@ public class Block implements BytePersistable {
             this.metadataList = new MetadataList(metadata_count);
             this.metadataList.read(dis, version);
          }
+         /*
+          * static objects
+          */
          staticObjects = new StaticObjects();
          staticObjects.read(dis, version);
+         /*
+          * node timers
+          */
          nodeTimers = new NodeTimers();
          nodeTimers.read(dis, version);
       } catch (Exception e) {
