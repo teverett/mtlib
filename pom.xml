@@ -18,6 +18,7 @@
         <aircompressor.version>0.25</aircompressor.version>
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <antlr.version>4.13.1</antlr.version>
+        <opencsv.version>5.9</opencsv.version>
     </properties>
     <developers>
         <developer>
@@ -74,6 +75,11 @@
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
             <version>${antlr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>${opencsv.version}</version>
         </dependency>
     </dependencies>
     <build>
