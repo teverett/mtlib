@@ -1,17 +1,14 @@
 List main 32
 Width 0
-Item carts:rail 5
 Empty
 Empty
-Item default:mese_crystal 2
-Empty
-Empty
+Item default:flint 3
 Empty
 Empty
 Empty
 Empty
 Empty
-Empty
+Item bucket:bucket_lava
 Empty
 Empty
 Empty
@@ -20,7 +17,10 @@ Empty
 Empty
 Empty
 Empty
-Item default:steel_ingot 5
+Empty
+Empty
+Empty
+Item default:coal_lump 11
 Empty
 Empty
 Empty

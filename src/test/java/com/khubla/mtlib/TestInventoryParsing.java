@@ -60,4 +60,28 @@ public class TestInventoryParsing {
          e.printStackTrace();
       }
    }
+
+   @Test
+   public void testInventoryParsing3() {
+      try {
+         /*
+          * get the input file as an InputStream
+          */
+         InputStream inputStream = TestInventoryParsing.class.getResourceAsStream("/inventory3.txt");
+         assertNotNull(inputStream);
+         Lexer lexer = new InventoryLexer(CharStreams.fromStream(inputStream));
+         TokenStream tokenStream = new CommonTokenStream(lexer);
+         InventoryParser parser = new InventoryParser(tokenStream);
+         InventoryParser.FileContext fileContext = parser.file();
+         assertNotNull(fileContext);
+         Inventory inventory = new Inventory();
+         FileListener fileListener = new FileListener(inventory);
+         fileContext.enterRule(fileListener);
+         assertNotNull(inventory.getInventoryLists());
+         assertEquals(1, inventory.getInventoryLists().size());
+         assertEquals(32, inventory.getInventoryLists().get(0).getDeclaredSize());
+      } catch (final Exception e) {
+         e.printStackTrace();
+      }
+   }
 }
