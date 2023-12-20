@@ -3,6 +3,7 @@ package com.khubla.mtlib.domain.inventory;
 import com.khubla.mtlib.InventoryLexer;
 import com.khubla.mtlib.InventoryParser;
 import com.khubla.mtlib.domain.StreamPersistable;
+import com.khubla.mtlib.domain.inventory.listener.FileListener;
 import com.khubla.mtlib.util.MTLibException;
 import com.khubla.mtlib.util.StringPersistence;
 import org.antlr.v4.runtime.CharStreams;
@@ -22,6 +23,10 @@ public class Inventory implements StreamPersistable {
    private final List<InventoryList> inventoryLists = new ArrayList<InventoryList>();
    private String inventoryString;
 
+   public List<InventoryList> getInventoryLists() {
+      return inventoryLists;
+   }
+
    public String getInventoryString() {
       return inventoryString;
    }
@@ -36,6 +41,8 @@ public class Inventory implements StreamPersistable {
          this.inventoryString = StringPersistence.readToMarker(dis, MARKER);
          if (!this.inventoryString.isEmpty()) {
             InventoryParser.FileContext fileContext = parseInventory(this.inventoryString);
+            FileListener fileListener = new FileListener(this);
+            fileContext.enterRule(fileListener);
          }
       } catch (Exception e) {
          throw new MTLibException("Exception in read", e);

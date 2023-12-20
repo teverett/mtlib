@@ -1,19 +1,16 @@
 grammar Inventory;
 
 file
-   : lines END EOF
+   : list* END EOF
    ;
 
-lines
-   : line+
+list
+   : LIST ID NUM listitem+ ENDLIST
    ;
 
-line
-   : listline
-   ;
-
-listline
-   : LIST ID NUM (item | width | EMPTY)* ENDLIST
+listitem
+   : (item | EMPTY)
+   | width
    ;
 
 width
