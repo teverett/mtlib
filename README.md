@@ -11,7 +11,7 @@ mtlib is distributed under the [2-clause BSD license](https://opensource.org/lic
 ````
 <dependency>
     <groupId>com.khubla.mtlib</groupId>
-    <artifactId>mtlib/artifactId>
+    <artifactId>mtlib</artifactId>
     <version>1.0.0</version>
 </dependency>
 ````
