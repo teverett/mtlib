@@ -62,12 +62,18 @@ public class NodeData implements StreamPersistable {
    }
 
    public void write(DataOutputStream dos, byte version) throws MTLibException {
-      //      try {
-      //         dos.writeShort(param0);
-      //         dos.writeShort(param1);
-      //         dos.writeShort(param2);
-      //      } catch (Exception e) {
-      //         throw new MTLibException("Exception in write", e);
-      //      }
+      try {
+         for (int i = 0; i < NODES_PER_BLOCK; i++) {
+            dos.writeShort(param0[i]);
+         }
+         for (int i = 0; i < NODES_PER_BLOCK; i++) {
+            dos.writeByte(param1[i]);
+         }
+         for (int i = 0; i < NODES_PER_BLOCK; i++) {
+            dos.writeByte(param2[i]);
+         }
+      } catch (Exception e) {
+         throw new MTLibException("Exception in write", e);
+      }
    }
 }

@@ -55,5 +55,15 @@ public class NodeTimers implements StreamPersistable {
 
    @Override
    public void write(DataOutputStream dos, byte version) throws MTLibException {
+      try {
+         dos.writeByte(NODE_TIME_LENGTH);
+         dos.writeShort((short) nodeTimers.size());
+         for (int i = 0; i < nodeTimers.size(); i++) {
+            NodeTimer nodeTimer = new NodeTimer();
+            nodeTimer.write(dos, version);
+         }
+      } catch (Exception e) {
+         throw new MTLibException("Exception in write", e);
+      }
    }
 }

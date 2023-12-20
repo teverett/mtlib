@@ -68,6 +68,7 @@ public class MetadataVar implements StreamPersistable {
          StringPersistence.write16(dos, this.key);
          StringPersistence.write32(dos, this.value);
          dos.writeByte(this.is_private);
+         inventory.write(dos, version);
       } catch (Exception e) {
          throw new MTLibException("Exception in write", e);
       }
