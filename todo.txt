@@ -1,8 +1,7 @@
 
-logging
 unit tests for each domain object
 read the rest of block
 docs
 unit tests runnable in GH actions
-fix the one hard-code "get" test
 finish inventory class (antlr)
+connection pooling

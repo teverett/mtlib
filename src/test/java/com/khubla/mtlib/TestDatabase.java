@@ -1,6 +1,7 @@
 package com.khubla.mtlib;
 
 import com.khubla.mtlib.db.Database;
+import com.khubla.mtlib.domain.Coord;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,8 @@ public class TestDatabase extends BaseTest {
    public void testGet() {
       try {
          Database database = new Database(propertiesFileDatabaseConfig);
-         byte[] block = database.get("-184561686");
+         // there is always a block 0,0,0
+         byte[] block = database.get(new Coord(0, 0, 0).toKey());
          assertNotNull(block);
       } catch (final Exception e) {
          e.printStackTrace();
