@@ -38,6 +38,14 @@ public class BlockTypes {
       return blockTypesByName;
    }
 
+   public short getId(String name) {
+      return blockTypesByName.get(name);
+   }
+
+   public String getName(short id) {
+      return blockTypesById.get(id);
+   }
+
    public void add(short id, String name) {
       blockTypesById.put(id, name);
       blockTypesByName.put(name, id);
