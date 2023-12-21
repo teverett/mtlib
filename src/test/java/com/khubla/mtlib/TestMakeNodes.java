@@ -1,6 +1,7 @@
 package com.khubla.mtlib;
 
 import com.khubla.mtlib.db.Database;
+import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
 import com.khubla.mtlib.worldmap.DefaultWorldMap;
 import com.khubla.mtlib.worldmap.Node;
@@ -14,14 +15,15 @@ public class TestMakeNodes extends BaseTest {
    //  @Disabled
    public void testgetSetNode() {
       try {
-         Coord coord = new Coord(-315, 3, 116);
+         Coord coord = new Coord(-547, 3, 510);
          // get node
          Node node = map.getNode(coord);
          System.out.println(node.getNodeType());
          // change type
-         node.setNodeType("default:stone");
+         node.setNodeType("default:dirt");
          // save node
-         map.setNode(coord, node);
+         Block modifedBlock = map.setNode(coord, node);
+         map.setBlock(modifedBlock);
       } catch (final Exception e) {
          e.printStackTrace();
       }

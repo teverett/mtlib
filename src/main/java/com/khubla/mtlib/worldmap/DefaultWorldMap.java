@@ -53,9 +53,9 @@ public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
       }
    }
 
-   public void setBlock(Coord coord, Block block) throws MTLibException {
+   public void setBlock(Block block) throws MTLibException {
       byte[] data = block.write();
-      database.set(coord.write(), data);
+      database.set(block.getKey().getBytes(), data);
    }
 
    public void iterateBlocks() throws MTLibException {
@@ -134,7 +134,7 @@ public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
    }
 
    @Override
-   public void setNode(Coord coord, Node node) throws MTLibException {
+   public Block setNode(Coord coord, Node node) throws MTLibException {
       Coord blockCoord = calculateNodeBlockCoords(coord);
       Block block = this.getBlock(blockCoord);
       if (null == block) {
@@ -143,6 +143,7 @@ public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
       Coord relativeCoord = calculateNodeRelativeCoords(coord, blockCoord);
       validateRelativeCoords(coord, blockCoord, relativeCoord);
       block.setNode(relativeCoord, node);
+      return block;
    }
 
    @Override

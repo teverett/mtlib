@@ -16,6 +16,10 @@ public class Coord implements BytePersistable {
       z = 0;
    }
 
+   public Coord(String key) {
+      read(key.getBytes());
+   }
+
    public Coord(long x, long y, long z) throws MTLibException {
       validate(x, y, z);
       this.x = x;

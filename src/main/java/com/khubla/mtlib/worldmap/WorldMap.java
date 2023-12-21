@@ -9,11 +9,11 @@ public interface WorldMap {
 
    Block getBlock(Coord coord) throws MTLibException;
 
-   void setBlock(Coord coord, Block block) throws MTLibException;
+   void setBlock(Block block) throws MTLibException;
 
    void iterateBlocks() throws MTLibException;
 
    Node getNode(Coord coord) throws MTLibException;
 
-   void setNode(Coord coord, Node node) throws MTLibException;
+   Block setNode(Coord coord, Node node) throws MTLibException;
 }
