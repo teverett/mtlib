@@ -318,25 +318,25 @@ public class Block implements BytePersistable {
       }
    }
 
-   void validateBlockRelativeCoords(short x, short y, short z) throws MTLibException {
-      if ((x < 0) || (x > +BLOCK_SIZE - 1)) {
-         throw new MTLibException("Invalid x:" + x);
+   void validateBlockRelativeCoords(Coord relativeCoord) throws MTLibException {
+      if ((Math.abs(relativeCoord.getX()) < 0) || (Math.abs(relativeCoord.getX()) > +BLOCK_SIZE - 1)) {
+         throw new MTLibException("Invalid x:" + relativeCoord.getX());
       }
-      if ((y < 0) || (y > +BLOCK_SIZE - 1)) {
-         throw new MTLibException("Invalid y:" + y);
+      if ((Math.abs(relativeCoord.getY()) < 0) || (Math.abs(relativeCoord.getY()) > +BLOCK_SIZE - 1)) {
+         throw new MTLibException("Invalid y:" + relativeCoord.getY());
       }
-      if ((z < 0) || (z > +BLOCK_SIZE - 1)) {
-         throw new MTLibException("Invalid z:" + z);
+      if ((Math.abs(relativeCoord.getZ()) < 0) || (Math.abs(relativeCoord.getZ()) > +BLOCK_SIZE - 1)) {
+         throw new MTLibException("Invalid z:" + relativeCoord.getZ());
       }
    }
 
    /*
     * Coord is relative to the block, not the world
     */
-   public Node getNode(short x, short y, short z) throws MTLibException {
-      validateBlockRelativeCoords(x, y, z);
+   public Node getNode(Coord relativeCoord) throws MTLibException {
+      validateBlockRelativeCoords(relativeCoord);
       if (null != this.nodeData) {
-         return this.nodeData.getNode(x, y, z);
+         return this.nodeData.getNode((short) relativeCoord.getX(), (short) relativeCoord.getY(), (short) relativeCoord.getZ());
       }
       return null;
    }
@@ -344,10 +344,10 @@ public class Block implements BytePersistable {
    /*
     * Coord is relative to the block, not the world
     */
-   public void setNode(short x, short y, short z, Node node) throws MTLibException {
-      validateBlockRelativeCoords(x, y, z);
+   public void setNode(Coord relativeCoord, Node node) throws MTLibException {
+      validateBlockRelativeCoords(relativeCoord);
       if ((null != this.nodeData) && (null != node)) {
-         this.nodeData.setNode(x, y, z, node);
+         this.nodeData.setNode((short) relativeCoord.getX(), (short) relativeCoord.getY(), (short) relativeCoord.getZ(), node);
       }
    }
 }
