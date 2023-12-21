@@ -26,6 +26,12 @@ public class Coord {
       this.z = z;
    }
 
+   public Coord(Coord coord) {
+      this.x = coord.x;
+      this.y = coord.y;
+      this.z = coord.z;
+   }
+
    /*
     * get the coords of the block that holds a specific node
     */
@@ -146,5 +152,37 @@ public class Coord {
       if ((z < MIN_EXTENT) || (z > +MAX_EXTENT)) {
          throw new MTLibException("Invalid z:" + z);
       }
+   }
+
+   public Coord subtract(Coord operand) {
+      Coord ret = new Coord(this);
+      ret.x = ret.x - operand.x;
+      ret.y = ret.y - operand.y;
+      ret.z = ret.z - operand.z;
+      return ret;
+   }
+
+   public Coord add(Coord operand) {
+      Coord ret = new Coord(this);
+      ret.x = ret.x + operand.x;
+      ret.y = ret.y + operand.y;
+      ret.z = ret.z + operand.z;
+      return ret;
+   }
+
+   public Coord scalarMultiply(long i) {
+      Coord ret = new Coord(this);
+      ret.x = ret.x * i;
+      ret.y = ret.y * i;
+      ret.z = ret.z * i;
+      return ret;
+   }
+
+   public Coord scalarDivide(long i) {
+      Coord ret = new Coord(this);
+      ret.x = ret.x / i;
+      ret.y = ret.y / i;
+      ret.z = ret.z / i;
+      return ret;
    }
 }
