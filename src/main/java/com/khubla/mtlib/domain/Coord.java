@@ -67,10 +67,17 @@ public class Coord {
     */
    public static Coord getBlockCoord(Coord coord) throws MTLibException {
       if (null != coord) {
-         long x = coord.getX() / 16;
-         long y = coord.getY() / 16;
-         long z = coord.getZ() / 16;
-         return new Coord(x * 16, y * 16, z * 16);
+         Coord ret = coord.scalarDivide(BLOCK_SIZE);
+         if (coord.getX() < 0) {
+            ret.setX(ret.getX() - 1);
+         }
+         if (coord.getY() < 0) {
+            ret.setY(ret.getY() - 1);
+         }
+         if (coord.getZ() < 0) {
+            ret.setZ(ret.getZ() - 1);
+         }
+         return ret;
       }
       return null;
    }
@@ -78,21 +85,24 @@ public class Coord {
    /*
     * calculate a relatives offsets of Node in its host Block
     */
+   // nodeCoord is in map coordinates, blockCoords is in block coordinates
    public static Coord calculateNodeRelativeCoords(Coord nodeCoords, Coord blockCoords) throws MTLibException {
-      Coord relativeCoord = new Coord();
-      relativeCoord.setX(nodeCoords.getX() - blockCoords.getX() * BLOCK_SIZE);
-      relativeCoord.setY(nodeCoords.getY() - blockCoords.getY() * BLOCK_SIZE);
-      relativeCoord.setZ(nodeCoords.getZ() - blockCoords.getZ() * BLOCK_SIZE);
-      if ((Math.abs(relativeCoord.getX()) < 0) || (Math.abs(relativeCoord.getX()) > BLOCK_SIZE)) {
-         throw new MTLibException("Invalid X relative Coord: " + relativeCoord.getX());
+      Coord blockOriginBlockCoords = blockCoords.scalarMultiply(BLOCK_SIZE);
+      Coord ret = nodeCoords.subtract(blockOriginBlockCoords);
+      if ((ret.getX() < 0) || (ret.getX() > BLOCK_SIZE)) {
+         throw new MTLibException("Invalid x relative Coord: " + ret.getX());
       }
-      if ((Math.abs(relativeCoord.getY()) < 0) || (Math.abs(relativeCoord.getY()) > BLOCK_SIZE)) {
-         throw new MTLibException("Invalid Y relative Coord" + relativeCoord.getY());
+      if ((ret.getY() < 0) || (ret.getY() > BLOCK_SIZE)) {
+         throw new MTLibException("Invalid y relative Coord" + ret.getY());
       }
-      if ((Math.abs(relativeCoord.getZ()) < 0) || (Math.abs(relativeCoord.getZ()) > BLOCK_SIZE)) {
-         throw new MTLibException("Invalid Z relative Coord" + relativeCoord.getZ());
+      if ((ret.getZ() < 0) || (ret.getZ() > BLOCK_SIZE)) {
+         throw new MTLibException("Invalid z relative Coord" + ret.getZ());
       }
-      return relativeCoord;
+      return ret;
+   }
+
+   public boolean eq(Coord coord) {
+      return (this.x == coord.x) && (this.y == coord.y) && (this.z == coord.z);
    }
 
    public long getY() {
