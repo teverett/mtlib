@@ -64,22 +64,28 @@ public class Block implements BytePersistable {
       this.nodeTimers = nodeTimers;
    }
 
+   /*
+    * public for unit testing purposes.  data is the original data chunk from Redis
+    */
+   public byte[] getUncompressedData(byte[] data) throws MTLibException {
+      this.version = data[0];
+      if (version == EXPECTED_SERIALIZATION_VERSION) {
+         byte[] b = ArrayUtils.remove(data, 0);
+         return ZStdCompression.decompress(b);
+      } else {
+         throw new MTLibException("Unexpected serialization version: " + version);
+      }
+   }
+
    @Override
    public void read(byte[] b) throws MTLibException {
       try {
-         // all sorts of flapping around to get a DataInputStream
-         this.version = b[0];
-         if (version == EXPECTED_SERIALIZATION_VERSION) {
-            b = ArrayUtils.remove(b, 0);
-            byte[] uncompressedData = ZStdCompression.decompress(b);
-            this.dataSize = uncompressedData.length;
-            ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
-            DataInputStream dis = new DataInputStream(bais);
-            // read the data
-            readFromDataInputStream(dis);
-         } else {
-            throw new MTLibException("Unexpected serialization version: " + version);
-         }
+         byte[] uncompressedData = getUncompressedData(b);
+         this.dataSize = uncompressedData.length;
+         ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
+         DataInputStream dis = new DataInputStream(bais);
+         // read the data
+         readFromDataInputStream(dis);
       } catch (Exception e) {
          throw new MTLibException("Exception in readFromString", e);
       }
