@@ -33,8 +33,8 @@ public class TestMakeNodes extends BaseTest {
    @Test
    public void stack() {
       try {
-         Coord coord = new Coord(-547, -1, 517);
-         for (int i = 0; i < 10; i++) {
+         Coord coord = new Coord(408, 2, 177);
+         for (int i = 0; i < 20; i++) {
             // get node
             Node node = map.getNode(coord);
             System.out.println(node.getNodeType());

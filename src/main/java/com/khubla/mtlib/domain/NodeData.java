@@ -6,6 +6,7 @@ import com.khubla.mtlib.worldmap.Node;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import static com.khubla.mtlib.domain.Constants.BLOCK_SIZE;
 import static com.khubla.mtlib.domain.Constants.NODES_PER_BLOCK;
 
 public class NodeData implements StreamPersistable {
@@ -13,7 +14,16 @@ public class NodeData implements StreamPersistable {
    private final byte[] param1 = new byte[NODES_PER_BLOCK];
    private final byte[] param2 = new byte[NODES_PER_BLOCK];
 
-   private int nodeIndex(short x, short y, short z) {
+   private int nodeIndex(short x, short y, short z) throws MTLibException {
+      if ((x < 0) || (x > BLOCK_SIZE)) {
+         throw new MTLibException("invalid x: " + x);
+      }
+      if ((y < 0) || (x > BLOCK_SIZE)) {
+         throw new MTLibException("invalid y: " + y);
+      }
+      if ((z < 0) || (x > BLOCK_SIZE)) {
+         throw new MTLibException("invalid z: " + z);
+      }
       return (z * 16 * 16 + y * 16 + x);
    }
 
