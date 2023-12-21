@@ -361,6 +361,10 @@ public class Block implements BytePersistable {
           * set the node data
           */
          this.nodeData.setNode((short) relativeCoord.getX(), (short) relativeCoord.getY(), (short) relativeCoord.getZ(), node);
+         /*
+          * increment timestamp (TODO, terrible hack!)
+          */
+         this.timestamp = this.timestamp + 10;
       }
    }
 }
