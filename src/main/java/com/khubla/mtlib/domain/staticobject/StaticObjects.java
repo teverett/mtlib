@@ -10,15 +10,6 @@ import java.util.List;
 
 public class StaticObjects implements StreamPersistable {
    private final List<StaticObject> staticObjects = new ArrayList<StaticObject>();
-   private short count;
-
-   public short getCount() {
-      return count;
-   }
-
-   public void setCount(short count) {
-      this.count = count;
-   }
 
    @Override
    public void read(DataInputStream dis, byte version) throws MTLibException {
@@ -27,8 +18,8 @@ public class StaticObjects implements StreamPersistable {
          if (0 != ver) {
             throw new MTLibException("Invalid ver: " + ver);
          }
-         this.count = dis.readShort();
-         if (this.count > 0) {
+         short count = dis.readShort();
+         if (count > 0) {
             for (int i = 0; i < count; i++) {
                StaticObject staticObject = new StaticObject();
                staticObject.read(dis, version);
@@ -43,6 +34,11 @@ public class StaticObjects implements StreamPersistable {
    @Override
    public void write(DataOutputStream dos, byte version) throws MTLibException {
       try {
+         dos.writeByte(0); // always version 0
+         dos.writeShort(staticObjects.size());
+         for (StaticObject staticObject : staticObjects) {
+            staticObject.write(dos, version);
+         }
       } catch (Exception e) {
          throw new MTLibException("Exception in write", e);
       }

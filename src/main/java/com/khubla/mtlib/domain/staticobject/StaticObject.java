@@ -35,6 +35,12 @@ public class StaticObject implements StreamPersistable {
       return v3f;
    }
 
+   private void writeV3F1000(DataOutputStream dos, V3f v3f) throws MTLibException {
+      writeF1000(dos, v3f.x);
+      writeF1000(dos, v3f.y);
+      writeF1000(dos, v3f.z);
+   }
+
    private int readF1000(DataInputStream dis) throws MTLibException {
       try {
          return dis.readInt() / FIXEDPOINT_FACTOR;
@@ -43,9 +49,20 @@ public class StaticObject implements StreamPersistable {
       }
    }
 
+   private void writeF1000(DataOutputStream dos, int i) throws MTLibException {
+      try {
+         dos.writeInt(i * FIXEDPOINT_FACTOR);
+      } catch (Exception e) {
+         throw new MTLibException("Exception in readF1000", e);
+      }
+   }
+
    @Override
    public void write(DataOutputStream dos, byte version) throws MTLibException {
       try {
+         dos.writeByte(this.type);
+         this.writeV3F1000(dos, this.v3f);
+         StringPersistence.write16(dos, data);
       } catch (Exception e) {
          throw new MTLibException("Exception in write", e);
       }
