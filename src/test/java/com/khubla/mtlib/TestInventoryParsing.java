@@ -66,7 +66,7 @@ public class TestInventoryParsing {
          fileContext.enterRule(fileListener);
          assertNotNull(inventory.getInventoryLists());
          assertEquals(1, inventory.getInventoryLists().size());
-         assertEquals(32, inventory.getInventoryLists().get(0).getDeclaredSize());
+         assertEquals(32, inventory.getInventoryLists().get(0).getInventoryItems().length);
       } catch (final Exception e) {
          e.printStackTrace();
       }
@@ -90,7 +90,7 @@ public class TestInventoryParsing {
          fileContext.enterRule(fileListener);
          assertNotNull(inventory.getInventoryLists());
          assertEquals(1, inventory.getInventoryLists().size());
-         assertEquals(32, inventory.getInventoryLists().get(0).getDeclaredSize());
+         assertEquals(32, inventory.getInventoryLists().get(0).getInventoryItems().length);
       } catch (final Exception e) {
          e.printStackTrace();
       }
@@ -114,7 +114,7 @@ public class TestInventoryParsing {
          fileContext.enterRule(fileListener);
          assertNotNull(inventory.getInventoryLists());
          assertEquals(1, inventory.getInventoryLists().size());
-         assertEquals(32, inventory.getInventoryLists().get(0).getDeclaredSize());
+         assertEquals(32, inventory.getInventoryLists().get(0).getInventoryItems().length);
       } catch (final Exception e) {
          e.printStackTrace();
       }

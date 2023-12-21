@@ -1,19 +1,20 @@
 package com.khubla.mtlib.domain.inventory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class InventoryList {
-   private final List<InventoryItem> InventoryItems = new ArrayList<InventoryItem>();
+   private final InventoryItem[] inventoryItems;
    private String name;
-   private int declaredSize;
+   private String width;
 
-   public int getDeclaredSize() {
-      return declaredSize;
+   public InventoryList(int declaredSize) {
+      this.inventoryItems = new InventoryItem[declaredSize];
    }
 
-   public void setDeclaredSize(int declaredSize) {
-      this.declaredSize = declaredSize;
+   public String getWidth() {
+      return width;
+   }
+
+   public void setWidth(String width) {
+      this.width = width;
    }
 
    public String getName() {
@@ -24,7 +25,7 @@ public class InventoryList {
       this.name = name;
    }
 
-   public List<InventoryItem> getInventoryItems() {
-      return InventoryItems;
+   public InventoryItem[] getInventoryItems() {
+      return inventoryItems;
    }
 }

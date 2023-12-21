@@ -57,22 +57,28 @@ public class Inventory implements StreamPersistable {
             writeString(dos, "List ");
             writeString(dos, inventoryList.getName() + " ");
             // TODO this might have to change, its the number of slots
-            writeString(dos, Integer.toString(inventoryList.getDeclaredSize()));
+            writeString(dos, Integer.toString(inventoryList.getInventoryItems().length));
             writeString(dos, "\n");
-            for (InventoryItem inventoryItem : inventoryList.getInventoryItems()) {
-               writeString(dos, "Item ");
-               writeString(dos, inventoryItem.getName());
-               if (null != inventoryItem.getI1()) {
-                  writeString(dos, " " + inventoryItem.getI1().toString());
-               }
-               if (null != inventoryItem.getI2()) {
-                  writeString(dos, " " + inventoryItem.getI2().toString());
-               }
+            if (null != inventoryList.getWidth()) {
+               writeString(dos, "Width ");
+               writeString(dos, inventoryList.getWidth());
                writeString(dos, "\n");
             }
-            int numEmpties = inventoryList.getDeclaredSize() - inventoryList.getInventoryItems().size();
-            for (int i = 0; i < numEmpties; i++) {
-               writeString(dos, "Empty\n");
+            for (int i = 0; i < inventoryList.getInventoryItems().length; i++) {
+               InventoryItem inventoryItem = inventoryList.getInventoryItems()[i];
+               if (null != inventoryItem) {
+                  writeString(dos, "Item ");
+                  writeString(dos, inventoryItem.getName());
+                  if (null != inventoryItem.getI1()) {
+                     writeString(dos, " " + inventoryItem.getI1().toString());
+                  }
+                  if (null != inventoryItem.getI2()) {
+                     writeString(dos, " " + inventoryItem.getI2().toString());
+                  }
+                  writeString(dos, "\n");
+               } else {
+                  writeString(dos, "Empty\n");
+               }
             }
             writeString(dos, "EndInventoryList\n");
          }

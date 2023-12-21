@@ -15,18 +15,26 @@ public class ListListener extends InventoryBaseListener {
 
    @Override
    public void enterList(InventoryParser.ListContext ctx) {
-      this.id = ctx.ID().getText();
-      InventoryList inventoryList = new InventoryList();
-      inventoryList.setName(id);
       if (null != ctx.NUM()) {
-         inventoryList.setDeclaredSize(Integer.parseInt(ctx.NUM().getText()));
-      }
-      if (null != ctx.listitem()) {
-         for (InventoryParser.ListitemContext listitemContext : ctx.listitem()) {
-            ListItemListener listItemListener = new ListItemListener(inventoryList);
-            listItemListener.enterListitem(listitemContext);
+         this.id = ctx.ID().getText();
+         InventoryList inventoryList = new InventoryList(Integer.parseInt(ctx.NUM().getText()));
+         inventoryList.setName(id);
+         if (null != ctx.listitem()) {
+            int i = 0;
+            for (InventoryParser.ListitemContext listitemContext : ctx.listitem()) {
+               ListItemListener listItemListener = new ListItemListener();
+               listItemListener.enterListitem(listitemContext);
+               if (null != listItemListener.width) {
+                  inventoryList.setWidth(listItemListener.width);
+               } else {
+                  if (null != listItemListener.inventoryItem) {
+                     inventoryList.getInventoryItems()[i] = listItemListener.inventoryItem;
+                  }
+                  i = i + 1;
+               }
+            }
+            this.inventory.getInventoryLists().add(inventoryList);
          }
-         this.inventory.getInventoryLists().add(inventoryList);
       }
    }
 }

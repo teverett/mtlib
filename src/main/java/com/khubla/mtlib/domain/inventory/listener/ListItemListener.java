@@ -3,14 +3,12 @@ package com.khubla.mtlib.domain.inventory.listener;
 import com.khubla.mtlib.InventoryBaseListener;
 import com.khubla.mtlib.InventoryParser;
 import com.khubla.mtlib.domain.inventory.InventoryItem;
-import com.khubla.mtlib.domain.inventory.InventoryList;
 
 public class ListItemListener extends InventoryBaseListener {
-   public final InventoryList inventoryList;
    public String width;
+   public InventoryItem inventoryItem = null;
 
-   public ListItemListener(InventoryList inventoryList) {
-      this.inventoryList = inventoryList;
+   public ListItemListener() {
    }
 
    @Override
@@ -22,7 +20,7 @@ public class ListItemListener extends InventoryBaseListener {
       } else if (null != ctx.item()) {
          ItemListener itemListener = new ItemListener();
          itemListener.enterItem(ctx.item());
-         InventoryItem inventoryItem = new InventoryItem();
+         inventoryItem = new InventoryItem();
          inventoryItem.setName(itemListener.id);
          if (null != itemListener.nums) {
             if (itemListener.nums.length > 1) {
@@ -32,7 +30,6 @@ public class ListItemListener extends InventoryBaseListener {
                inventoryItem.setI2(Integer.parseInt(itemListener.nums[1]));
             }
          }
-         inventoryList.getInventoryItems().add(inventoryItem);
       }
    }
 }
