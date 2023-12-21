@@ -43,6 +43,34 @@ public class TestInventoryParsing {
          dos.flush();
          byte[] b = baos.toByteArray();
          assertNotNull(b);
+         /*
+          * read the orginal data, as bytes
+          */
+         InputStream inputStream2 = TestInventoryParsing.class.getResourceAsStream("/inventory1.txt");
+         byte[] bbb = inputStream2.readAllBytes();
+         assertNotNull(bbb);
+
+         /*
+          * show both on console
+          */
+         //   System.out.println(new String(b));
+         //  System.out.println(new String(bbb));
+         /*
+          * check byte by byte
+          */
+         int l = b.length > bbb.length ? b.length : bbb.length;
+         for (int i = 0; i < l; i++) {
+            byte orig = bbb[i];
+            byte written = b[i];
+            if (orig != written) {
+               System.out.println("difference at index: " + i);
+            }
+         }
+
+         /*
+          * same length?
+          */
+         assertEquals(bbb.length, b.length);
       } catch (final Exception e) {
          e.printStackTrace();
       }

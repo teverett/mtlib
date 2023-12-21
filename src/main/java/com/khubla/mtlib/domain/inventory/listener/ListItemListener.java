@@ -23,7 +23,7 @@ public class ListItemListener extends InventoryBaseListener {
          inventoryItem = new InventoryItem();
          inventoryItem.setName(itemListener.id);
          if (null != itemListener.nums) {
-            if (itemListener.nums.length > 1) {
+            if (itemListener.nums.length >= 1) {
                inventoryItem.setI1(Integer.parseInt(itemListener.nums[0]));
             }
             if (itemListener.nums.length >= 2) {

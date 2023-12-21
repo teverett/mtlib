@@ -234,10 +234,29 @@ public class Block implements BytePersistable {
    @Override
    public byte[] write() throws MTLibException {
       try {
+         /**
+          * this is the stream we will return
+          */
+         ByteArrayOutputStream ret = new ByteArrayOutputStream();
+         DataOutputStream retdos = new DataOutputStream(ret);
+         retdos.write(EXPECTED_SERIALIZATION_VERSION);
+         /**
+          * this is the stream we will compress
+          */
          ByteArrayOutputStream baos = new ByteArrayOutputStream();
          DataOutputStream dos = new DataOutputStream(baos);
          writeToDataOutputStream(dos);
-         return null;
+         dos.flush();
+         /**
+          * compress
+          */
+         byte[] compressedData = ZStdCompression.compress(baos.toByteArray());
+         /*
+          * add on the returned stream
+          */
+         retdos.write(compressedData, 0, compressedData.length);
+         retdos.flush();
+         return ret.toByteArray();
       } catch (Exception e) {
          throw new MTLibException("Exception in write", e);
       }
@@ -258,9 +277,33 @@ public class Block implements BytePersistable {
           */
          dos.writeInt(this.timestamp);
          /*
-          * name-id-mapping version
+          * name id mapping
           */
-         dos.writeByte(0);
+         this.nameIdMapping.write(dos, version);
+         /*
+          * content width
+          */
+         dos.writeByte(this.content_width);
+         /**
+          * params_width
+          */
+         dos.writeByte(this.params_width);
+         /*
+          * node data
+          */
+         this.nodeData.write(dos, version);
+         /*
+          * metadata
+          */
+         this.metadataList.write(dos, version);
+         /*
+          * static objects
+          */
+         this.staticObjects.write(dos, version);
+         /*
+          * node timers
+          */
+         this.nodeTimers.write(dos, version);
       } catch (Exception e) {
          throw new MTLibException("Exception in writeToDataOutputStream", e);
       }
