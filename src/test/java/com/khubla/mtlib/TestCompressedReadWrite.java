@@ -3,6 +3,7 @@ package com.khubla.mtlib;
 import com.khubla.mtlib.db.Database;
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
+import com.khubla.mtlib.util.HexDump;
 import com.khubla.mtlib.util.MTLibException;
 import com.khubla.mtlib.worldmap.BlockIterator;
 import com.khubla.mtlib.worldmap.DefaultWorldMap;
@@ -15,13 +16,13 @@ import java.io.DataOutputStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class TestReadWrite extends BaseTest implements BlockIterator {
+public class TestCompressedReadWrite extends BaseTest implements BlockIterator {
    DefaultWorldMap map = new DefaultWorldMap(propertiesFileDatabaseConfig, this);
    Database database = new Database(propertiesFileDatabaseConfig);
 
    @Test
    @Disabled
-   public void testFullReadWrite() {
+   public void testCompressedReadWrite() {
       try {
          map.iterateBlocks();
       } catch (final Exception e) {
@@ -37,6 +38,7 @@ public class TestReadWrite extends BaseTest implements BlockIterator {
        get redis bytes
        */
       byte[] originalBytes = database.get(block.getKey());
+      HexDump.dump(originalBytes, originalBytes.length);
       assertNotNull(originalBytes);
       /*
        read to a block
@@ -50,6 +52,7 @@ public class TestReadWrite extends BaseTest implements BlockIterator {
       DataOutputStream dos = new DataOutputStream(baos);
       byte[] writtenBytes = blok.write();
       assertNotNull(writtenBytes);
+      HexDump.dump(writtenBytes, writtenBytes.length);
       // check that the byte arrays are the same size
       assertEquals(writtenBytes.length, originalBytes.length);
       /*
