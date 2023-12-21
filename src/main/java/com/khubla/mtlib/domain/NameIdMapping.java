@@ -15,6 +15,22 @@ public class NameIdMapping implements StreamPersistable {
    public NameIdMapping() {
    }
 
+   public Short addMapping(String name) throws MTLibException {
+      Short id = nameToIdMap.get(name);
+      if (null != id) {
+         throw new MTLibException("name " + name + " already exists with id: " + id);
+      }
+      // next index
+      id = (short) idToNameMap.size();
+      this.addMapping(name, id);
+      return id;
+   }
+
+   public void addMapping(String name, Short id) {
+      nameToIdMap.put(name, id);
+      idToNameMap.put(id, name);
+   }
+
    public Short getId(String name) {
       return nameToIdMap.get(name);
    }
@@ -41,8 +57,7 @@ public class NameIdMapping implements StreamPersistable {
          for (int i = 0; i < num_name_id_mappings; i++) {
             short id = dis.readShort();
             String s = StringPersistence.read16(dis);
-            nameToIdMap.put(s, id);
-            idToNameMap.put(id, s);
+            addMapping(s, id);
          }
       } catch (Exception e) {
          throw new MTLibException("Exception in read", e);

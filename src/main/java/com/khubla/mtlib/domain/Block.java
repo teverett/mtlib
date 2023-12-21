@@ -349,6 +349,17 @@ public class Block implements BytePersistable {
    public void setNode(Coord relativeCoord, Node node) throws MTLibException {
       validateBlockRelativeCoords(relativeCoord);
       if ((null != this.nodeData) && (null != node)) {
+         /*
+          * update the nameid map
+          */
+         Short id = this.nameIdMapping.getId(node.getNodeType());
+         if (null == id) {
+            id = nameIdMapping.addMapping(node.getNodeType());
+         }
+         node.setParam0(id);
+         /*
+          * set the node data
+          */
          this.nodeData.setNode((short) relativeCoord.getX(), (short) relativeCoord.getY(), (short) relativeCoord.getZ(), node);
       }
    }
