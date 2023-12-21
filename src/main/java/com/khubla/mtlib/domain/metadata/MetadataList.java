@@ -9,28 +9,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MetadataList implements StreamPersistable {
-   private final short count;
-   private final List<Metadata> lst = new ArrayList<Metadata>();
+   private final List<Metadata> metadataList = new ArrayList<Metadata>();
 
-   public MetadataList(short count) {
-      this.count = count;
+   public MetadataList() {
    }
 
-   public short getCount() {
-      return count;
-   }
-
-   public List<Metadata> getLst() {
-      return lst;
+   public List<Metadata> getMetadataList() {
+      return metadataList;
    }
 
    @Override
    public void read(DataInputStream dis, byte version) throws MTLibException {
       try {
-         for (int i = 0; i < count; i++) {
-            Metadata metadata = new Metadata();
-            metadata.read(dis, version);
-            lst.add(metadata);
+         byte metadata_version = dis.readByte();
+         if (0 != metadata_version) {
+            if (2 != metadata_version) {
+               throw new MTLibException("Invalid metadata_version: " + metadata_version);
+            }
+            short metadata_count = dis.readShort();
+            if (metadata_count > 0) {
+               for (int i = 0; i < metadata_count; i++) {
+                  Metadata metadata = new Metadata();
+                  metadata.read(dis, version);
+                  metadataList.add(metadata);
+               }
+            }
          }
       } catch (Exception e) {
          throw new MTLibException("Exception in read", e);
@@ -40,8 +43,8 @@ public class MetadataList implements StreamPersistable {
    @Override
    public void write(DataOutputStream dos, byte version) throws MTLibException {
       try {
-         for (int i = 0; i < count; i++) {
-            Metadata metadata = this.lst.get(i);
+         for (int i = 0; i < this.getMetadataList().size(); i++) {
+            Metadata metadata = this.metadataList.get(i);
             metadata.write(dos, version);
          }
       } catch (Exception e) {

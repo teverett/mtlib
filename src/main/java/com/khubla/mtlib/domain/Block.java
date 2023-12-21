@@ -25,11 +25,7 @@ public class Block implements BytePersistable {
    private byte content_width;
    private byte params_width;
    private int timestamp;
-   private byte name_id_mapping_version;
-   private short num_name_id_mappings;
    private NodeData nodeData;
-   private byte metadata_version;
-   private short metadata_count;
    private MetadataList metadataList;
    private byte version;
    private NodeTimers nodeTimers;
@@ -109,12 +105,7 @@ public class Block implements BytePersistable {
          /*
           * name-id-mapping
           */
-         this.name_id_mapping_version = dis.readByte();
-         if (0 != name_id_mapping_version) {
-            throw new MTLibException("Unexpected name_id_mapping_version: " + name_id_mapping_version);
-         }
-         this.num_name_id_mappings = dis.readShort();
-         nameIdMapping = new NameIdMapping(num_name_id_mappings);
+         nameIdMapping = new NameIdMapping();
          nameIdMapping.read(dis, version);
          /*
           * content width
@@ -141,17 +132,8 @@ public class Block implements BytePersistable {
          /*
           * metadata
           */
-         this.metadata_version = dis.readByte();
-         if (0 != metadata_version) {
-            if (2 != metadata_version) {
-               throw new MTLibException("Invalid metadata_version: " + metadata_version);
-            }
-            this.metadata_count = dis.readShort();
-            if (metadata_count > 0) {
-               this.metadataList = new MetadataList(metadata_count);
-               this.metadataList.read(dis, version);
-            }
-         }
+         this.metadataList = new MetadataList();
+         this.metadataList.read(dis, version);
          /*
           * static objects
           */
@@ -221,44 +203,12 @@ public class Block implements BytePersistable {
       this.timestamp = timestamp;
    }
 
-   public byte getName_id_mapping_version() {
-      return name_id_mapping_version;
-   }
-
-   public void setName_id_mapping_version(byte name_id_mapping_version) {
-      this.name_id_mapping_version = name_id_mapping_version;
-   }
-
-   public short getNum_name_id_mappings() {
-      return num_name_id_mappings;
-   }
-
-   public void setNum_name_id_mappings(short num_name_id_mappings) {
-      this.num_name_id_mappings = num_name_id_mappings;
-   }
-
    public NodeData getNodeData() {
       return nodeData;
    }
 
    public void setNodeData(NodeData nodeData) {
       this.nodeData = nodeData;
-   }
-
-   public byte getMetadata_version() {
-      return metadata_version;
-   }
-
-   public void setMetadata_version(byte metadata_version) {
-      this.metadata_version = metadata_version;
-   }
-
-   public short getMetadata_count() {
-      return metadata_count;
-   }
-
-   public void setMetadata_count(short metadata_count) {
-      this.metadata_count = metadata_count;
    }
 
    public MetadataList getMetadataList() {

@@ -11,10 +11,8 @@ import java.util.Map;
 public class NameIdMapping implements StreamPersistable {
    private final HashMap<String, Short> nameToIdMap = new HashMap<String, Short>();
    private final HashMap<Short, String> idToNameMap = new HashMap<Short, String>();
-   private final short count;
 
-   public NameIdMapping(short count) {
-      this.count = count;
+   public NameIdMapping() {
    }
 
    public HashMap<String, Short> getNameToIdMap() {
@@ -25,13 +23,14 @@ public class NameIdMapping implements StreamPersistable {
       return idToNameMap;
    }
 
-   public short getCount() {
-      return count;
-   }
-
    public void read(DataInputStream dis, byte version) throws MTLibException {
       try {
-         for (int i = 0; i < count; i++) {
+         byte name_id_mapping_version = dis.readByte();
+         if (0 != name_id_mapping_version) {
+            throw new MTLibException("Unexpected name_id_mapping_version: " + name_id_mapping_version);
+         }
+         short num_name_id_mappings = dis.readShort();
+         for (int i = 0; i < num_name_id_mappings; i++) {
             short id = dis.readShort();
             String s = StringPersistence.read16(dis);
             nameToIdMap.put(s, id);
@@ -44,7 +43,7 @@ public class NameIdMapping implements StreamPersistable {
 
    public void write(DataOutputStream dos, byte version) throws MTLibException {
       try {
-         dos.writeByte((byte) 0);
+         dos.writeByte((byte) 0); // name_id_mapping_version, always 0
          dos.writeShort(nameToIdMap.size());
          for (Map.Entry<Short, String> entry : idToNameMap.entrySet()) {
             dos.writeShort(entry.getKey());
