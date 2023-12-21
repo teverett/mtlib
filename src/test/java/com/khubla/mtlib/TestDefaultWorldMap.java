@@ -26,7 +26,7 @@ public class TestDefaultWorldMap extends BaseTest {
    public void testBlockCoords1() {
       try {
          WorldMap worldMap = new DefaultWorldMap(propertiesFileDatabaseConfig);
-         Coord coord = DefaultWorldMap.getBlockCoord(new Coord(0, 0, 0));
+         Coord coord = Coord.getBlockCoord(new Coord(0, 0, 0));
          assertNotNull(coord);
          assertEquals(0, coord.getX());
          assertEquals(0, coord.getY());
@@ -40,7 +40,7 @@ public class TestDefaultWorldMap extends BaseTest {
    public void testBlockCoords2() {
       try {
          WorldMap worldMap = new DefaultWorldMap(propertiesFileDatabaseConfig);
-         Coord coord = DefaultWorldMap.getBlockCoord(new Coord(16, 16, 16));
+         Coord coord = Coord.getBlockCoord(new Coord(16, 16, 16));
          assertNotNull(coord);
          assertEquals(16, coord.getX());
          assertEquals(16, coord.getY());
@@ -54,7 +54,7 @@ public class TestDefaultWorldMap extends BaseTest {
    public void testBlockCoords3() {
       try {
          WorldMap worldMap = new DefaultWorldMap(propertiesFileDatabaseConfig);
-         Coord coord = DefaultWorldMap.getBlockCoord(new Coord(15, 15, 15));
+         Coord coord = Coord.getBlockCoord(new Coord(15, 15, 15));
          assertNotNull(coord);
          assertEquals(0, coord.getX());
          assertEquals(0, coord.getY());
@@ -69,7 +69,7 @@ public class TestDefaultWorldMap extends BaseTest {
    public void testBlockCoords4() {
       try {
          WorldMap worldMap = new DefaultWorldMap(propertiesFileDatabaseConfig);
-         Coord coord = DefaultWorldMap.getBlockCoord(new Coord(-15, -15, -15));
+         Coord coord = Coord.getBlockCoord(new Coord(-15, -15, -15));
          assertNotNull(coord);
          assertEquals(-16, coord.getX());
          assertEquals(-16, coord.getY());
