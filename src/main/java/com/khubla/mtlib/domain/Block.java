@@ -336,7 +336,9 @@ public class Block implements BytePersistable {
    public Node getNode(Coord relativeCoord) throws MTLibException {
       validateBlockRelativeCoords(relativeCoord);
       if (null != this.nodeData) {
-         return this.nodeData.getNode((short) relativeCoord.getX(), (short) relativeCoord.getY(), (short) relativeCoord.getZ());
+         Node n = this.nodeData.getNode((short) relativeCoord.getX(), (short) relativeCoord.getY(), (short) relativeCoord.getZ());
+         n.setNodeType(this.nameIdMapping.getName(n.getParam0()));
+         return n;
       }
       return null;
    }

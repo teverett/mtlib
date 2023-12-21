@@ -15,6 +15,14 @@ public class NameIdMapping implements StreamPersistable {
    public NameIdMapping() {
    }
 
+   public Short getId(String name) {
+      return nameToIdMap.get(name);
+   }
+
+   public String getName(Short id) {
+      return idToNameMap.get(id);
+   }
+
    public HashMap<String, Short> getNameToIdMap() {
       return nameToIdMap;
    }

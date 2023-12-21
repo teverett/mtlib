@@ -105,7 +105,14 @@ public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
       }
       Coord relativeCoord = calculateNodeRelativeCoords(coord, blockCoord);
       validateRelativeCoords(coord, blockCoord, relativeCoord);
-      return block.getNode(relativeCoord);
+      Node ret = block.getNode(relativeCoord);
+      if (null != ret) {
+         ret.setNodeCoord(coord);
+         ret.setBlockCoord(blockCoord);
+         return ret;
+      } else {
+         throw new MTLibException("Unable to find node");
+      }
    }
 
    /*

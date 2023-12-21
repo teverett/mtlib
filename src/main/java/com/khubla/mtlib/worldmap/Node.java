@@ -1,5 +1,7 @@
 package com.khubla.mtlib.worldmap;
 
+import com.khubla.mtlib.domain.Coord;
+
 /**
  * Note that Node is not a persistent class.  It exists for convenience
  */
@@ -7,6 +9,33 @@ public class Node {
    private byte param2;
    private byte param1;
    private short param0;
+   private String nodeType;
+   private Coord blockCoord;
+   private Coord nodeCoord;
+
+   public Coord getBlockCoord() {
+      return blockCoord;
+   }
+
+   public void setBlockCoord(Coord blockCoord) {
+      this.blockCoord = blockCoord;
+   }
+
+   public Coord getNodeCoord() {
+      return nodeCoord;
+   }
+
+   public void setNodeCoord(Coord nodeCoord) {
+      this.nodeCoord = nodeCoord;
+   }
+
+   public String getNodeType() {
+      return nodeType;
+   }
+
+   public void setNodeType(String nodeType) {
+      this.nodeType = nodeType;
+   }
 
    public byte getParam2() {
       return param2;
