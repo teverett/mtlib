@@ -5,7 +5,7 @@ import com.khubla.mtlib.util.MTLibException;
 import static com.khubla.mtlib.domain.Constants.MAX_EXTENT;
 import static com.khubla.mtlib.domain.Constants.MIN_EXTENT;
 
-public class Coord implements BytePersistable {
+public class Coord {
    private long x;
    private long y;
    private long z;
@@ -17,7 +17,7 @@ public class Coord implements BytePersistable {
    }
 
    public Coord(String key) {
-      read(key.getBytes());
+      fromKey(key);
    }
 
    public Coord(long x, long y, long z) throws MTLibException {
@@ -55,20 +55,18 @@ public class Coord implements BytePersistable {
       return "x: " + x + " y:" + y + " z:" + z;
    }
 
-   @Override
+   public void fromKey(byte[] key) {
+      fromKey(new String(key));
+   }
+
    // https://github.com/minetest/minetest/blob/master/src/database/database.cpp
-   public void read(byte[] s) {
-      long ll = Long.parseLong(new String(s));
+   public void fromKey(String key) {
+      long ll = Long.parseLong(key);
       this.x = ll % 4096;
       ll = (ll - x) / 4096;
       this.y = ll % 4096;
       ll = (ll - y) / 4096;
       this.z = ll % 4096;
-   }
-
-   @Override
-   public byte[] write() {
-      return toKey().getBytes();
    }
 
    // https://github.com/minetest/minetest/blob/master/src/database/database.cpp

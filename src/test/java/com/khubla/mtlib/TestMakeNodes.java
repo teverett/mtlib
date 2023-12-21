@@ -5,6 +5,7 @@ import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
 import com.khubla.mtlib.worldmap.DefaultWorldMap;
 import com.khubla.mtlib.worldmap.Node;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class TestMakeNodes extends BaseTest {
@@ -12,7 +13,7 @@ public class TestMakeNodes extends BaseTest {
    Database database = new Database(propertiesFileDatabaseConfig);
 
    @Test
-   //  @Disabled
+   @Disabled
    public void testgetSetNode() {
       try {
          Coord coord = new Coord(-547, 3, 510);
@@ -20,10 +21,31 @@ public class TestMakeNodes extends BaseTest {
          Node node = map.getNode(coord);
          System.out.println(node.getNodeType());
          // change type
-         node.setNodeType("default:dirt");
+         node.setNodeType("default:stone");
          // save node
          Block modifedBlock = map.setNode(coord, node);
          map.setBlock(modifedBlock);
+      } catch (final Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+   @Test
+   public void stack() {
+      try {
+         Coord coord = new Coord(-547, 3, 510);
+         for (int i = 0; i < 10; i++) {
+            // get node
+            Node node = map.getNode(coord);
+            System.out.println(node.getNodeType());
+            // change type
+            node.setNodeType("default:stone");
+            // save node
+            Block modifedBlock = map.setNode(coord, node);
+            map.setBlock(modifedBlock);
+            // increment coord
+            coord.setY(coord.getY() + 1);
+         }
       } catch (final Exception e) {
          e.printStackTrace();
       }

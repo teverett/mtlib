@@ -43,7 +43,7 @@ public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
    }
 
    public Block getBlock(Coord coord) throws MTLibException {
-      byte[] blockData = database.get(coord.write());
+      byte[] blockData = database.get(coord.toKey());
       if (null != blockData) {
          Block block = new Block(coord.toKey());
          block.read(blockData);
@@ -149,7 +149,7 @@ public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
    @Override
    public void entry(String key, byte[] value) throws MTLibException {
       Coord coord = new Coord();
-      coord.read(key.getBytes());
+      coord.fromKey(key);
       Block block = new Block(key);
       block.read(value);
       this.blockIterator.block(coord, block);
