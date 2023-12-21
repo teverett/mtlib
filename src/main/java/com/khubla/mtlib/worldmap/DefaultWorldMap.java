@@ -51,7 +51,7 @@ public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
 
    @Override
    public Node getNode(Coord coord) throws MTLibException {
-      Coord blockCoord = Coord.calculateNodeBlockCoords(coord);
+      Coord blockCoord = Coord.getBlockCoord(coord);
       Block block = this.getBlock(blockCoord);
       if (null == block) {
          throw new MTLibException("Unable to find block at coords " + blockCoord + " for node at coords: " + coord);
@@ -70,7 +70,7 @@ public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
 
    @Override
    public Block setNode(Coord coord, Node node) throws MTLibException {
-      Coord blockCoord = Coord.calculateNodeBlockCoords(coord);
+      Coord blockCoord = Coord.getBlockCoord(coord);
       Block block = this.getBlock(blockCoord);
       if (null == block) {
          throw new MTLibException("Unable to find block at coords " + blockCoord + " for node at coords: " + coord);

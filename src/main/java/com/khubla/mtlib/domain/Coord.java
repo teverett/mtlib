@@ -33,18 +33,6 @@ public class Coord {
    }
 
    /*
-    * get the coords of the block that holds a specific node
-    */
-   // https://minetest.gitlab.io/minetest/map-terminology-and-coordinates/
-   public static Coord calculateNodeBlockCoords(Coord nodeCoords) {
-      Coord blockCoord = new Coord();
-      blockCoord.setX((long) Math.floor(nodeCoords.getX() / BLOCK_SIZE));
-      blockCoord.setY((long) Math.floor(nodeCoords.getY() / BLOCK_SIZE));
-      blockCoord.setZ((long) Math.floor(nodeCoords.getZ() / BLOCK_SIZE));
-      return blockCoord;
-   }
-
-   /*
     * a little check
     */
    public static void validateRelativeCoords(Coord nodeCoord, Coord blockCoord, Coord relativeCoord) throws MTLibException {
@@ -89,13 +77,13 @@ public class Coord {
    public static Coord calculateNodeRelativeCoords(Coord nodeCoords, Coord blockCoords) throws MTLibException {
       Coord blockOriginBlockCoords = blockCoords.scalarMultiply(BLOCK_SIZE);
       Coord ret = nodeCoords.subtract(blockOriginBlockCoords);
-      if ((ret.getX() < 0) || (ret.getX() > BLOCK_SIZE)) {
+      if ((ret.getX() < 0) || (ret.getX() > BLOCK_SIZE - 1)) {
          throw new MTLibException("Invalid x relative Coord: " + ret.getX());
       }
-      if ((ret.getY() < 0) || (ret.getY() > BLOCK_SIZE)) {
+      if ((ret.getY() < 0) || (ret.getY() > BLOCK_SIZE - 1)) {
          throw new MTLibException("Invalid y relative Coord" + ret.getY());
       }
-      if ((ret.getZ() < 0) || (ret.getZ() > BLOCK_SIZE)) {
+      if ((ret.getZ() < 0) || (ret.getZ() > BLOCK_SIZE - 1)) {
          throw new MTLibException("Invalid z relative Coord" + ret.getZ());
       }
       return ret;
