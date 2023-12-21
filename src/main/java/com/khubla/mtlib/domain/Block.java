@@ -86,9 +86,9 @@ public class Block implements BytePersistable {
    }
 
    /**
-    * read the uncompressed data
+    * read the uncompressed data.  public access for unit testing
     */
-   private void readFromDataInputStream(DataInputStream dis) throws MTLibException {
+   public void readFromDataInputStream(DataInputStream dis) throws MTLibException {
       try {
          /*
           * flags
@@ -262,7 +262,10 @@ public class Block implements BytePersistable {
       }
    }
 
-   private void writeToDataOutputStream(DataOutputStream dos) throws MTLibException {
+   /*
+    * write data to stream. public access for unit testing
+    */
+   public void writeToDataOutputStream(DataOutputStream dos) throws MTLibException {
       try {
          /*
           * flags
