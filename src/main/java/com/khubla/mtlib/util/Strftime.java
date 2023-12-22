@@ -1,5 +1,10 @@
 package com.khubla.mtlib.util;
 
+/**
+ * I don't want to talk about it.
+ */
+// https://en.cppreference.com/w/c/chrono/strftime
+// mapblock.cpp::serialize
 public class Strftime {
    private static final int SECONDS_PER_MINUTE = 60;
    private static final int MINUTES_PER_HOUR = 60;
