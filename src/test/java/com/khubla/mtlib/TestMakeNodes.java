@@ -31,10 +31,9 @@ public class TestMakeNodes extends BaseTest {
    }
 
    @Test
-   @Disabled
    public void stack() {
       try {
-         Coord coord = new Coord(108, 2, 177);
+         Coord coord = new Coord(-285, 6, -313);
          for (int i = 0; i < 20; i++) {
             // get node
             Node node = map.getNode(coord);
@@ -52,10 +51,24 @@ public class TestMakeNodes extends BaseTest {
       }
    }
 
+   // THIS TEST FAILS!
+   @Test
+   @Disabled
+   public void testgetNodeBAD() {
+      try {
+         Coord coord = new Coord(-289, 0, -304);
+         // get node
+         Node node = map.getNode(coord);
+         System.out.println(node.getNodeType());
+      } catch (final Exception e) {
+         e.printStackTrace();
+      }
+   }
+
    @Test
    public void testgetNode() {
       try {
-         Coord coord = new Coord(367, 9, 135);
+         Coord coord = new Coord(-285, 6, -313);
          // get node
          Node node = map.getNode(coord);
          System.out.println(node.getNodeType());
