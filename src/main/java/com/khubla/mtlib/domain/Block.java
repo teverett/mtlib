@@ -4,6 +4,7 @@ import com.khubla.mtlib.compress.ZStdCompression;
 import com.khubla.mtlib.domain.metadata.MetadataList;
 import com.khubla.mtlib.domain.staticobject.StaticObjects;
 import com.khubla.mtlib.util.MTLibException;
+import com.khubla.mtlib.worldmap.DefaultWorldMap;
 import com.khubla.mtlib.worldmap.Node;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -24,13 +25,14 @@ public class Block implements BytePersistable {
    private short m_lighting_complete;
    private byte content_width;
    private byte params_width;
-   private int timestamp;
+   private int timestamp; // (Timestamp when last saved, as seconds from starting the game)
    private NodeData nodeData;
    private MetadataList metadataList;
    private byte version;
    private NodeTimers nodeTimers;
    private StaticObjects staticObjects;
    private long dataSize;
+   private long readTime; // (epoch time when this block was read)
 
    public Block(String key) {
       this.key = key;
@@ -80,11 +82,20 @@ public class Block implements BytePersistable {
    @Override
    public void read(byte[] b) throws MTLibException {
       try {
+         /*
+          * record when we read this
+          */
+         this.readTime = System.currentTimeMillis();
+         /*
+          * read uncompressed data
+          */
          byte[] uncompressedData = getUncompressedData(b);
          this.dataSize = uncompressedData.length;
          ByteArrayInputStream bais = new ByteArrayInputStream(uncompressedData);
          DataInputStream dis = new DataInputStream(bais);
-         // read the data
+         /*
+          * read the data
+          */
          readFromDataInputStream(dis);
       } catch (Exception e) {
          throw new MTLibException("Exception in readFromString", e);
@@ -105,7 +116,7 @@ public class Block implements BytePersistable {
           */
          this.m_lighting_complete = dis.readShort();
          /*
-          * timestamp
+          * timestamp (Timestamp when last saved, as seconds from starting the game)
           */
          this.timestamp = dis.readInt();
          /*
@@ -206,7 +217,9 @@ public class Block implements BytePersistable {
    }
 
    public void setTimestamp(int timestamp) {
-      this.timestamp = timestamp;
+      if (!DefaultWorldMap.isIgnoreBlockTimestampChanges()) {
+         this.timestamp = timestamp;
+      }
    }
 
    public NodeData getNodeData() {
@@ -240,6 +253,15 @@ public class Block implements BytePersistable {
    @Override
    public byte[] write() throws MTLibException {
       try {
+         /*
+          * calculate "time".  We have the "timestamp" for this block which is the number of seconds
+          * that have passed on the server since the block was last saved. We also have the epoch time when this block was read.
+          * What we have is "when this block was last saved relative to an unknown time"
+          * we dont have the server start time, so we kinda cant play the by the rules here.
+          * So, we'll just add ("current time" - read time) to timestamp.2
+          */
+         int secondsSinceLastSaved = (int) (System.currentTimeMillis() - this.readTime) / 1000;
+         this.setTimestamp(this.getTimestamp() + secondsSinceLastSaved);
          /**
           * this is the stream we will return
           */
@@ -361,10 +383,6 @@ public class Block implements BytePersistable {
           * set the node data
           */
          this.nodeData.setNode((short) relativeCoord.getX(), (short) relativeCoord.getY(), (short) relativeCoord.getZ(), node);
-         /*
-          * increment timestamp (TODO, terrible hack!)
-          */
-         this.timestamp = this.timestamp + 10;
       }
    }
 }
