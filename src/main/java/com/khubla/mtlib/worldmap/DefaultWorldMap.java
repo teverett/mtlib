@@ -10,6 +10,8 @@ import com.khubla.mtlib.util.MTLibException;
  * Minetest World map
  */
 public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
+   // for unit testing purposes
+   private static boolean ignoreBlockTimestampChanges = false;
    private final com.khubla.mtlib.db.Database database;
    private final BlockIterator blockIterator;
 
@@ -21,6 +23,16 @@ public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
    public DefaultWorldMap(DatabaseConfig databaseConfig) {
       this.blockIterator = null;
       this.database = new com.khubla.mtlib.db.Database(databaseConfig);
+   }
+
+   // for unit testing
+   public static boolean isIgnoreBlockTimestampChanges() {
+      return ignoreBlockTimestampChanges;
+   }
+   // for unit testing
+
+   public static void setIgnoreBlockTimestampChanges(boolean ignoreBlockTimestampChanges) {
+      DefaultWorldMap.ignoreBlockTimestampChanges = ignoreBlockTimestampChanges;
    }
 
    public long size() {
