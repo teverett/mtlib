@@ -34,7 +34,7 @@ public class TestMakeNodes extends BaseTest {
    @Test
    public void stack() {
       try {
-         Coord coord = new Coord(366, 0, 317);
+         Coord coord = new Coord(369, 3, 315);
          for (int i = 0; i < 20; i++) {
             // get node
             Node node = map.getNode(coord);
