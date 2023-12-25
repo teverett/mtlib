@@ -1,6 +1,7 @@
 package com.khubla.mtlib;
 
 import com.khubla.mtlib.db.Database;
+import com.khubla.mtlib.db.redis.RedisDatabase;
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
 import com.khubla.mtlib.worldmap.DefaultWorldMap;
@@ -9,8 +10,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class TestMakeNodes extends BaseTest {
-   DefaultWorldMap map = new DefaultWorldMap(propertiesFileDatabaseConfig, null);
-   Database database = new Database(propertiesFileDatabaseConfig);
+   Database database = new RedisDatabase(propertiesFileDatabaseConfig);
+   DefaultWorldMap map = new DefaultWorldMap(database, null);
 
    @Test
    @Disabled

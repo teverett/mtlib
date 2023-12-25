@@ -1,4 +1,4 @@
-package com.khubla.mtlib.db;
+package com.khubla.mtlib.db.config;
 
 public class BaseDatabaseConfig implements DatabaseConfig {
    private String hostname;

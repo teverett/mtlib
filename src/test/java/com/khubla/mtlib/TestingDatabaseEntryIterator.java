@@ -1,6 +1,6 @@
 package com.khubla.mtlib;
 
-import com.khubla.mtlib.db.DatabaseEntryIterator;
+import com.khubla.mtlib.db.config.DatabaseEntryIterator;
 
 public class TestingDatabaseEntryIterator implements DatabaseEntryIterator {
    @Override

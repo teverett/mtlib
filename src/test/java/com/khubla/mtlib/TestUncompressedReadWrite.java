@@ -1,6 +1,7 @@
 package com.khubla.mtlib;
 
 import com.khubla.mtlib.db.Database;
+import com.khubla.mtlib.db.redis.RedisDatabase;
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
 import com.khubla.mtlib.util.MTLibException;
@@ -16,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestUncompressedReadWrite extends BaseTest implements BlockIterator {
-   DefaultWorldMap map = new DefaultWorldMap(propertiesFileDatabaseConfig, this);
-   Database database = new Database(propertiesFileDatabaseConfig);
+   Database database = new RedisDatabase(propertiesFileDatabaseConfig);
+   DefaultWorldMap map = new DefaultWorldMap(database, this);
 
    @Test
    @Disabled

@@ -1,7 +1,7 @@
 package com.khubla.mtlib.worldmap;
 
-import com.khubla.mtlib.db.DatabaseConfig;
-import com.khubla.mtlib.db.DatabaseEntryIterator;
+import com.khubla.mtlib.db.Database;
+import com.khubla.mtlib.db.config.DatabaseEntryIterator;
 import com.khubla.mtlib.domain.Block;
 import com.khubla.mtlib.domain.Coord;
 import com.khubla.mtlib.util.MTLibException;
@@ -12,17 +12,17 @@ import com.khubla.mtlib.util.MTLibException;
 public class DefaultWorldMap implements WorldMap, DatabaseEntryIterator {
    // for unit testing purposes
    private static boolean ignoreBlockTimestampChanges = false;
-   private final com.khubla.mtlib.db.Database database;
+   private final Database database;
    private final BlockIterator blockIterator;
 
-   public DefaultWorldMap(DatabaseConfig databaseConfig, BlockIterator blockIterator) {
+   public DefaultWorldMap(Database database, BlockIterator blockIterator) {
       this.blockIterator = blockIterator;
-      this.database = new com.khubla.mtlib.db.Database(databaseConfig);
+      this.database = database;
    }
 
-   public DefaultWorldMap(DatabaseConfig databaseConfig) {
+   public DefaultWorldMap(Database database) {
       this.blockIterator = null;
-      this.database = new com.khubla.mtlib.db.Database(databaseConfig);
+      this.database = database;
    }
 
    // for unit testing

@@ -1,6 +1,7 @@
 package com.khubla.mtlib;
 
 import com.khubla.mtlib.db.Database;
+import com.khubla.mtlib.db.redis.RedisDatabase;
 import com.khubla.mtlib.domain.Coord;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ public class TestDatabase extends BaseTest {
    @Test
    public void testGet() {
       try {
-         Database database = new Database(propertiesFileDatabaseConfig);
+         Database database = new RedisDatabase(propertiesFileDatabaseConfig);
          // there is always a block 0,0,0
          byte[] block = database.get(new Coord(0, 0, 0).toKey());
          assertNotNull(block);
@@ -25,7 +26,7 @@ public class TestDatabase extends BaseTest {
    @Test
    public void testSize() {
       try {
-         Database database = new Database(propertiesFileDatabaseConfig);
+         Database database = new RedisDatabase(propertiesFileDatabaseConfig);
          long size = database.size();
          assertTrue(size != 0);
       } catch (final Exception e) {
@@ -36,7 +37,7 @@ public class TestDatabase extends BaseTest {
    @Test
    public void testKeys() {
       try {
-         Database database = new Database(propertiesFileDatabaseConfig);
+         Database database = new RedisDatabase(propertiesFileDatabaseConfig);
          long size = database.size();
          assertTrue(size != 0);
          Set<String> keys = database.allKeys();
@@ -50,7 +51,7 @@ public class TestDatabase extends BaseTest {
    @Disabled
    public void testKeyIterator() {
       try {
-         Database database = new Database(propertiesFileDatabaseConfig);
+         Database database = new RedisDatabase(propertiesFileDatabaseConfig);
          database.iterateMapEntries(new TestingDatabaseEntryIterator());
       } catch (final Exception e) {
          e.printStackTrace();

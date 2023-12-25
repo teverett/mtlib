@@ -1,6 +1,6 @@
 package com.khubla.mtlib;
 
-import com.khubla.mtlib.db.PropertiesFileDatabaseConfig;
+import com.khubla.mtlib.db.config.PropertiesFileDatabaseConfig;
 import com.khubla.mtlib.util.MTLibException;
 import org.junit.jupiter.api.BeforeAll;
 
