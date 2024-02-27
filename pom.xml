@@ -13,7 +13,7 @@
         <required-maven-version>3.3.1</required-maven-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.1</junit.version>
-        <jedis.version>5.1.0</jedis.version>
+        <jedis.version>5.1.1</jedis.version>
         <commons.io.version>2.15.1</commons.io.version>
         <aircompressor.version>0.25</aircompressor.version>
         <commons-lang3.version>3.14.0</commons-lang3.version>
