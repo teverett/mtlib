@@ -9,7 +9,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <description>khubla.com Minetest Redis Library</description>
     <properties>
-        <target.jvm>17</target.jvm>
+        <target.jvm>21</target.jvm>
         <required-maven-version>3.3.1</required-maven-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.1</junit.version>
