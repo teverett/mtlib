@@ -15,7 +15,7 @@
         <junit.version>5.10.2</junit.version>
         <jedis.version>5.1.0</jedis.version>
         <commons.io.version>2.15.1</commons.io.version>
-        <aircompressor.version>0.25</aircompressor.version>
+        <aircompressor.version>0.26</aircompressor.version>
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <antlr.version>4.13.1</antlr.version>
         <opencsv.version>5.9</opencsv.version>
