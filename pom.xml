@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.12.2</junit.version>
         <jedis.version>5.2.0</jedis.version>
-        <commons.io.version>2.18.0</commons.io.version>
+        <commons.io.version>2.20.0</commons.io.version>
         <aircompressor.version>2.0.2</aircompressor.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
         <antlr.version>4.13.2</antlr.version>
