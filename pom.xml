@@ -12,7 +12,7 @@
         <target.jvm>21</target.jvm>
         <required-maven-version>3.3.1</required-maven-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>6.0.0</junit.version>
+        <junit.version>6.0.2</junit.version>
         <jedis.version>7.2.1</jedis.version>
         <commons.io.version>2.20.0</commons.io.version>
         <aircompressor.version>2.0.2</aircompressor.version>
